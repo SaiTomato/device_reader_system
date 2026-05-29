@@ -21,73 +21,81 @@ getPcDetail
 
 function PcDetailPage() {
 
-const { pcNumber } = useParams();
+  const { pcNumber } = useParams();
 
-const [pcDetail, setPcDetail] = useState<PcDetail | null>(null);
+  const [pcDetail, setPcDetail] = useState<PcDetail | null>(null);
 
-useEffect(() => {
+  useEffect(() => {
 
-async function fetchPcDetail() {
+    async function fetchPcDetail() {
 
-  if(!pcNumber) return;
+      if(!pcNumber) return;
 
-  const result = await getPcDetail(
-    pcNumber
+      const result = await getPcDetail(
+        pcNumber
+      );
+
+      if(result.result === "success"
+      && result.data
+      ) {
+
+        setPcDetail(
+        result.data
+        );
+
+      }
+
+    }
+
+    fetchPcDetail();
+
+  }, [pcNumber]);
+
+  if(!pcDetail){
+
+  return <div>Loading...</div>;
+
+  }
+
+  return (
+
+  <div>
+
+    <h1>
+      PC Detail Page
+    </h1>
+
+    <p>
+
+      PC番号:
+      {pcDetail.pcNumber}
+
+    </p>
+
+    <p>
+
+      PC名:
+      {pcDetail.pcName}
+
+    </p>
+
+    <p>
+
+      使用者:
+      {pcDetail.employeeCurrent}
+
+    </p>
+
+    <p>
+
+      状態:
+      {pcDetail.pcStatus}
+
+    </p>
+
+  </div>
+
   );
-
-  setPcDetail(result);
-
-}
-
-fetchPcDetail();
-
-}, [pcNumber]);
-
-if(!pcDetail){
-
-return <div>Loading...</div>;
-
-}
-
-return (
-
-<div>
-
-  <h1>
-    PC Detail Page
-  </h1>
-
-  <p>
-
-    PC番号:
-    {pcDetail.pcNumber}
-
-  </p>
-
-  <p>
-
-    PC名:
-    {pcDetail.pcName}
-
-  </p>
-
-  <p>
-
-    使用者:
-    {pcDetail.employeeName}
-
-  </p>
-
-  <p>
-
-    状態:
-    {pcDetail.status}
-
-  </p>
-
-</div>
-
-);
 
 }
 

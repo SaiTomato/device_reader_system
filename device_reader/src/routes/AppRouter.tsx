@@ -6,6 +6,8 @@ Route
 
 } from "react-router-dom";
 
+import MainLayout from "../layouts/MainLayout";
+
 import HomePage from "../pages/HomePage";
 import PcListPage from "../pages/PcListPage";
 import PcDetailPage from "../pages/PcDetailPage";
@@ -21,22 +23,22 @@ return (
 
     <Route
       path="/"
-      element={<HomePage />}
+      element={<MainLayout><HomePage /></MainLayout>}
     />
 
     <Route
       path="/pc-list"
-      element={<PcListPage />}
+      element={<MainLayout><PcListPage /></MainLayout>}
     />
 
     <Route
       path="/pc-detail/:pcNumber"
-      element={<PcDetailPage />}
+      element={<MainLayout><PcDetailPage /></MainLayout>}
     />
 
     <Route
       path="/pc-edit/:pcNumber"
-      element={<PcEditPage />}
+      element={<MainLayout><PcEditPage /></MainLayout>}
     />
 
   </Routes>

@@ -28,9 +28,9 @@ const [pcList] = useState([
 
 return (
 
-<div>
+<div className="p-8">
 
-  <h1>
+  <h1 className="text-3xl font-bold mb-6">
     PC List Page
   </h1>
 

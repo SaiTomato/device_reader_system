@@ -1,23 +1,43 @@
-import type {
+import type {PcDetail} from "../types/pc";
 
-PcDetail
+import type {ApiResponse} from "../types/api";
 
-} from "../types/pc";
+const API_URL = import.meta.env.VITE_GAS_API_URL;
 
 export async function getPcDetail(
 
 pcNumber: string
 
-): Promise<PcDetail> {
+): Promise<ApiResponse<PcDetail>> {
 
-return {
+const response = await fetch(
 
-pcNumber,
-pcName: "営業PC001",
-employeeName: "山田太郎",
-status: "使用中"
+API_URL,
 
-};
+{
+
+  method: "POST",
+
+  headers: {
+
+    "Content-Type":
+      "application/json"
+
+  },
+
+  body: JSON.stringify({
+
+    action: "getPcDetail",
+
+    pcNumber
+
+  })
+
+}
+
+);
+
+return await response.json();
 
 }
 

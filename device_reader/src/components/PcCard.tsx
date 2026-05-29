@@ -19,16 +19,9 @@ onDetailClick
 
 return (
 
-<div
-  style={{
-    border: "1px solid #ccc",
-    padding: "16px",
-    marginBottom: "16px",
-    borderRadius: "8px"
-  }}
->
+<div className="border rounded-xl p-4 mb-4 shadow">
 
-  <h3>
+  <h3 className="text-xl font-bold mb-2">
     {pcName}
   </h3>
 
@@ -42,7 +35,9 @@ return (
     {employeeName}
   </p>
 
-  <button onClick={onDetailClick}>
+  <button
+  className=" mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 "
+  onClick={onDetailClick}>
     詳細
   </button>
 
