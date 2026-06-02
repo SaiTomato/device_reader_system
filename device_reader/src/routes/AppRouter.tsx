@@ -11,7 +11,7 @@ import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/HomePage";
 import PcListPage from "../pages/PcListPage";
 import PcDetailPage from "../pages/PcDetailPage";
-import PcEditPage from "../pages/PcEditPage";
+// import PcEditPage from "../pages/PcEditPage";
 
 function AppRouter() {
 
@@ -38,7 +38,7 @@ return (
 
     <Route
       path="/pc-edit/:pcNumber"
-      element={<MainLayout><PcEditPage /></MainLayout>}
+      // element={<MainLayout><PcEditPage /></MainLayout>}
     />
 
   </Routes>

@@ -1,21 +1,21 @@
-export interface DropdownItem {
+// export interface DropdownItem {
 
-  value: string;
+//   value: string;
 
-  label: string;
+//   label: string;
 
-}
+// }
 
-export interface DropdownOptions {
+export interface MasterData {
 
-  pcStatus?: DropdownItem[];
+  pcStatus?: string[];
 
-  pcCategory?: DropdownItem[];
+  pcCategory?: string[];
 
-  pcUsage?: DropdownItem[];
+  pcUsage?: string[];
 
-  pcDivision?: DropdownItem[];
+  pcDivision?: string[];
 
-  pcLocation?: DropdownItem[];
+  pcLocation?: string[];
 
 }

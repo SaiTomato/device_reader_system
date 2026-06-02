@@ -1,175 +1,78 @@
-import {
-
-useEffect,
-useState
-
-} from "react";
-
-import type {
-
-PcDetailResponse
-
-} from "../types/api/pcDetailDto";
-
 import { useParams } from "react-router-dom";
-
-import {
-
-getPcDetail
-
-} from "../services/pcService";
+// 1. 引入改名后的自定义 Hook
+import { usePcDetail } from "../services/pcService";
 
 function PcDetailPage() {
-
+  // 从路由获取 pcNumber
   const { pcNumber } = useParams();
 
-  const [pcDetail, setPcDetail] = useState<GetPcDetailResponse | null>(null);
+  // 2. 一行代码替代原有的 useState, useEffect 和 fetch 逻辑
+  // 解构出 data (自动映射为 PcDetailResponse 类型) 和 isLoading 状态
+  const { data: pcDetail, isLoading, error } = usePcDetail(pcNumber || "");
 
-  useEffect(() => {
-
-    async function fetchPcDetail() {
-
-      if(!pcNumber) return;
-
-      try {
-
-        const pcDetail =
-
-          await getPcDetail(
-            pcNumber
-          );
-
-        setPcDetail(
-          pcDetail
-        );
-
-      } catch(error) {
-
-        console.error(error);
-
-      }
-
-    }
-
-    fetchPcDetail();
-
-  }, [pcNumber]);
-
-  if(!pcDetail){
-
-  return <div>Loading...</div>;
-
+  // 3. 处理加载中状态（更严谨，结合了 React Query 的自动感知）
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
+  // 4. 可选：处理错误状态（如果 GAS 返回了错误，可以在这里直接展示给用户）
+  if (error) {
+    return <div>加载失败: {error.message}</div>;
+  }
+
+  // 5. 这里的 pcDetail 已经是安全的、有完整 TypeScript 提示的数据了
   return (
+    <div>
+      <h1>
+        PC詳細
+      </h1>
 
-  <div>
+      <p>
+        PC番号:
+        {pcDetail?.pcNumber}
+      </p>
 
-    <h1>
-      PC Detail Page
-    </h1>
+      <p>
+        PC名:
+        {pcDetail?.pcName}
+      </p>
 
-    <p>
+      <p>
+        使用者:
+        {pcDetail?.employeeCurrent}
+      </p>
 
-      PC番号:
-      {pcDetail.}
+      <p>
+        状態:
+        {pcDetail?.pcStatus}
+      </p>
 
-    </p>
+      <p>
+        分類:
+        {pcDetail?.pcCategory}
+      </p>
 
-    <p>
+      <p>
+        用途:
+        {pcDetail?.pcUsage}
+      </p>
 
-      PC名:
-      {pcDetail.pcName}
+      <p>
+        区分:
+        {pcDetail?.pcDivision}
+      </p>
 
-    </p>
+      <p>
+        場所:
+        {pcDetail?.pcLocation}
+      </p>
 
-    <p>
-
-      使用者:
-      {pcDetail.employeeCurrent}
-
-    </p>
-
-    <p>
-
-      状態:
-      {pcDetail.pcStatus}
-
-    </p>
-
-    <p>
-
-      分類:
-      {pcDetail.pcCategory}
-
-    </p>
-
-    <p>
-
-      用途:
-      {pcDetail.pcUsage}
-
-    </p>
-
-    <p>
-
-      区分:
-      {pcDetail.pcDivision}
-
-    </p>
-
-    <p>
-
-      場所:
-      {pcDetail.pcLocation}
-
-    </p>
-
-    <p>
-
-      更新日:
-      {pcDetail.pcUpdateDate}
-
-    </p>
-
-  </div>
-
+      <p>
+        更新日:
+        {pcDetail?.pcUpdateDate}
+      </p>
+    </div>
   );
-
 }
 
 export default PcDetailPage;
-
-
-// import { useParams } from "react-router-dom";
-// // 1. 引入改名后的自定义 Hook
-// import { usePcDetail } from "../services/pcService";
-
-// function PcDetailPage() {
-//   // 从路由获取 pcNumber
-//   const { pcNumber } = useParams();
-
-//   // 2. 一行代码替代原有的 useState, useEffect 和 fetch 逻辑
-//   // 解构出 data (自动映射为 PcDetailResponse 类型) 和 isLoading 状态
-//   const { data: pcDetail, isLoading, error } = usePcDetail(pcNumber || "");
-
-//   // 3. 处理加载中状态（更严谨，结合了 React Query 的自动感知）
-//   if (isLoading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   // 4. 可选：处理错误状态（如果 GAS 返回了错误，可以在这里直接展示给用户）
-//   if (error) {
-//     return <div>加载失败: {error.message}</div>;
-//   }
-
-//   // 5. 这里的 pcDetail 已经是安全的、有完整 TypeScript 提示的数据了
-//   return (
-//     <div>
-//       {/* 你的真实 HTML 渲染逻辑 */}
-//       <h1>PC 详情：{pcDetail?.pc_number}</h1>
-//     </div>
-//   );
-// }
-
-// export default PcDetailPage;

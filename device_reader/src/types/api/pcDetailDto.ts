@@ -9,6 +9,6 @@ export type PcDetailResponse = Pick<PcDetail,
   'pcDivision' |
   'pcLocation' |
   'employeeCurrent'
-  >[] & {
+  > & {
   pcUpdateDate: string;
 };

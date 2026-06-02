@@ -1,38 +1,16 @@
-import type {DropdownOptions} from "../types/entity/master";
-import type {ApiResponse} from "../types/api/common";
-const API_URL = import.meta.env.VITE_GAS_API_URL;
+import { useQuery } from '@tanstack/react-query';
+import { requestGas } from '../types/api/client';
+import type { PcFilterOptionsResponse } from '../types/api/pcListDto';
 
-export async function getDropdownData()
-: Promise<DropdownOptions> {
-  if (!API_URL) {
-    throw new Error("VITE_GAS_API_URL 未配置");
-  }
-
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      // GAS 作为 Web App 必须支持重定向，fetch 默认就是 'follow'，保持默认即可
-      redirect: "follow", 
-      headers: { "Content-Type": "text/plain" }, 
-      body: JSON.stringify({ action: "getDropdownData" })
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP 错误！状态码: ${response.status}`);
-    }
-
-    // 2. 如果你的 GAS 返回的是被 ApiResponse 包裹的结构（例如：{ success: true, data: { ... } }）
-    const result: ApiResponse<DropdownOptions> = await response.json();
-    if (result.result === "success" && result.data) {
-      return result.data;
-    } else {
-      throw new Error(result.message || "获取下拉菜单失败");
-    }
+export function usePcListFilterOptions(){
+  return useQuery<PcFilterOptionsResponse>({
+    // 固定的缓存 Key，因为不需要参数，所以数组里放一个字符串就够了
+    queryKey: ['pcFilterOptions'], 
     
-  } catch (error) {
-    console.error("请求 GAS API 出错:", error);
-    // 抛出错误让调用它的组件可以捕捉到，或者返回空对象作为兜底
-    throw error; 
-  }
-
+    // 触发 GAS 的 'getFilterOptions' 路由，payload 传空对象
+    queryFn: () => requestGas<PcFilterOptionsResponse>('getFilterOptions', {}),
+    
+    // 可选配置：因为下拉菜单数据一般变动不频繁，可以设置缓存时间为 5 分钟，避免频繁重复请求
+    staleTime: 1000 * 60 * 5, 
+  });
 }
