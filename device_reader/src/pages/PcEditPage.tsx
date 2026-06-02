@@ -15,7 +15,7 @@ import type {
 
 DropdownOptions
 
-} from "../types/master";
+} from "../types/entity/master";
 
 function PcEditPage() {
 
@@ -83,40 +83,40 @@ return (
   <div>
     <select>
       <option value="">请选择状况</option>
-      {dropdownOptions.状況?.map(item => (
-        <option key={item} value={item}>{item}</option>
+      {dropdownOptions.pcStatus?.map(item => (
+        <option key={item.value} value={item.value}>{item.label}</option>
       ))}
     </select>
   </div>
   <div>
     <select>
       <option value="">请选择分類</option>
-      {dropdownOptions.分類?.map(item => (
-        <option key={item} value={item}>{item}</option>
+      {dropdownOptions.pcCategory?.map(item => (
+        <option key={item.value} value={item.value}>{item.label}</option>
       ))}
     </select>
   </div>
   <div>
     <select>
       <option value="">请选择用途</option>
-      {dropdownOptions.用途?.map(item => (
-        <option key={item} value={item}>{item}</option>
+      {dropdownOptions.pcUsage?.map(item => (
+        <option key={item.value} value={item.value}>{item.label}</option>
       ))}
     </select>
   </div>
   <div>
     <select>
       <option value="">请选择区分</option>
-      {dropdownOptions.区分?.map(item => (
-        <option key={item} value={item}>{item}</option>
+      {dropdownOptions.pcDivision?.map(item => (
+        <option key={item.value} value={item.value}>{item.label}</option>
       ))}
     </select>
   </div>
   <div>
     <select>
       <option value="">请选择場所</option>
-      {dropdownOptions.場所?.map(item => (
-        <option key={item} value={item}>{item}</option>
+      {dropdownOptions.pcLocation?.map(item => (
+        <option key={item.value} value={item.value}>{item.label}</option>
       ))}
     </select>
   </div>

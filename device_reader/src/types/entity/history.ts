@@ -1,9 +1,8 @@
-export interface UpdateType {
-    LOAN: 'LOAN';
-    CREATE: 'CREATE';
-    UPDATE: 'UPDATE';
-    DELETE: 'DELETE';
-}
+export type UpdateType =
+  | "LOAN"
+  | "CREATE"
+  | "UPDATE"
+  | "DELETE";
 
 export interface PcHistory {
 
@@ -19,5 +18,5 @@ export interface PcHistory {
 
     updatedBy: string;
     
-    updateType: keyof UpdateType;
+    updateType: UpdateType;
 }

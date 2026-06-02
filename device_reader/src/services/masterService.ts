@@ -1,9 +1,8 @@
-import type {DropdownOptions} from "../types/master";
-import type {ApiResponse} from "../types/api";
+import type {DropdownOptions} from "../types/entity/master";
+import type {ApiResponse} from "../types/api/common";
 const API_URL = import.meta.env.VITE_GAS_API_URL;
 
 export async function getDropdownData()
-
 : Promise<DropdownOptions> {
   if (!API_URL) {
     throw new Error("VITE_GAS_API_URL 未配置");

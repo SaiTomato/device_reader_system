@@ -16,11 +16,11 @@ export interface PcDetail {
 
     employeeCurrent: string;
 
-    //employeeAvailable: boolean;
+    employeeAvailable: boolean;
 
     employeePrevious: string;
 
-    //pcState: string;
+    pcState: string;
 
     pcRemark: string;
 

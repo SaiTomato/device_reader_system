@@ -7,9 +7,9 @@ useState
 
 import type {
 
-PcDetail
+PcDetailResponse
 
-} from "../types/pc";
+} from "../types/api/pcDetailDto";
 
 import { useParams } from "react-router-dom";
 
@@ -23,7 +23,7 @@ function PcDetailPage() {
 
   const { pcNumber } = useParams();
 
-  const [pcDetail, setPcDetail] = useState<PcDetail | null>(null);
+  const [pcDetail, setPcDetail] = useState<GetPcDetailResponse | null>(null);
 
   useEffect(() => {
 
@@ -31,17 +31,21 @@ function PcDetailPage() {
 
       if(!pcNumber) return;
 
-      const result = await getPcDetail(
-        pcNumber
-      );
+      try {
 
-      if(result.result === "success"
-      && result.data
-      ) {
+        const pcDetail =
+
+          await getPcDetail(
+            pcNumber
+          );
 
         setPcDetail(
-        result.data
+          pcDetail
         );
+
+      } catch(error) {
+
+        console.error(error);
 
       }
 
@@ -68,7 +72,7 @@ function PcDetailPage() {
     <p>
 
       PC番号:
-      {pcDetail.pcNumber}
+      {pcDetail.}
 
     </p>
 
@@ -93,6 +97,41 @@ function PcDetailPage() {
 
     </p>
 
+    <p>
+
+      分類:
+      {pcDetail.pcCategory}
+
+    </p>
+
+    <p>
+
+      用途:
+      {pcDetail.pcUsage}
+
+    </p>
+
+    <p>
+
+      区分:
+      {pcDetail.pcDivision}
+
+    </p>
+
+    <p>
+
+      場所:
+      {pcDetail.pcLocation}
+
+    </p>
+
+    <p>
+
+      更新日:
+      {pcDetail.pcUpdateDate}
+
+    </p>
+
   </div>
 
   );
@@ -100,3 +139,37 @@ function PcDetailPage() {
 }
 
 export default PcDetailPage;
+
+
+// import { useParams } from "react-router-dom";
+// // 1. 引入改名后的自定义 Hook
+// import { usePcDetail } from "../services/pcService";
+
+// function PcDetailPage() {
+//   // 从路由获取 pcNumber
+//   const { pcNumber } = useParams();
+
+//   // 2. 一行代码替代原有的 useState, useEffect 和 fetch 逻辑
+//   // 解构出 data (自动映射为 PcDetailResponse 类型) 和 isLoading 状态
+//   const { data: pcDetail, isLoading, error } = usePcDetail(pcNumber || "");
+
+//   // 3. 处理加载中状态（更严谨，结合了 React Query 的自动感知）
+//   if (isLoading) {
+//     return <div>Loading...</div>;
+//   }
+
+//   // 4. 可选：处理错误状态（如果 GAS 返回了错误，可以在这里直接展示给用户）
+//   if (error) {
+//     return <div>加载失败: {error.message}</div>;
+//   }
+
+//   // 5. 这里的 pcDetail 已经是安全的、有完整 TypeScript 提示的数据了
+//   return (
+//     <div>
+//       {/* 你的真实 HTML 渲染逻辑 */}
+//       <h1>PC 详情：{pcDetail?.pc_number}</h1>
+//     </div>
+//   );
+// }
+
+// export default PcDetailPage;

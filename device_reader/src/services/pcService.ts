@@ -1,48 +1,25 @@
-import type {PcDetail} from "../types/pc";
+import { useQuery } from '@tanstack/react-query';
+import { requestGas } from '../types/api/client';
+import type { PcDetailResponse } from '../types/api/pcDetailDto';
 
-import type {ApiResponse} from "../types/api";
-
-const API_URL = import.meta.env.VITE_GAS_API_URL;
-
-export async function getPcDetail(
-
-pcNumber: string
-
-): Promise<ApiResponse<PcDetail>> {
-
-const response = await fetch(
-
-API_URL,
-
-{
-
-  method: "POST",
-
-  headers: {
-
-    "Content-Type":
-      "application/json"
-
-  },
-
-  body: JSON.stringify({
-
-    action: "getPcDetail",
-
-    pcNumber
-
-  })
-
+export function usePcDetail(pcNumber: string) {
+  return useQuery<PcDetailResponse>({
+    queryKey: ['pcDetail', pcNumber],
+    queryFn: () => requestGas<PcDetailResponse>('getPcDetail', { pcNumber })
+  });
 }
 
-);
+// // src/services/pcService.ts
+// import { useQuery } from '@tanstack/react-query';
+// import { requestGas } from '../types/api/client';
+// import type { PcDetailResponse } from '../types/api/pcDetailDto';
 
-return await response.json();
-
-}
-
-
-// TODO: APIからPC詳細情報を取得する実装を追加する
-// fetch()
-// axios()
-// GAS API
+// // 函数名改为以 use 开头
+// export function usePcDetail(pcNumber: string) {
+//   return useQuery<PcDetailResponse>({
+//     queryKey: ['pcDetail', pcNumber],
+//     queryFn: () => requestGas<PcDetailResponse>('getPcDetail', { pcNumber }),
+//     // 只有当 pcNumber 真正存在时，React Query 才会发起网络请求
+//     enabled: !!pcNumber, 
+//   });
+// }
