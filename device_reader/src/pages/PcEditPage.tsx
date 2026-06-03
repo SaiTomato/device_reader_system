@@ -1,129 +1,194 @@
-// import {
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { usePcDetail } from '../services/pcService';
+import { usePcListFilterOptions } from '../services/masterService';
+import SearchSelect from '../components/SearchSelect';
+import { useNavigate } from "react-router-dom";
 
-// useEffect,
-// useState
 
-// } from "react";
+function PcEditPage() {
+    const { pcNumber } = useParams();
+    const navigate = useNavigate();
 
-// import {
+    const { data: pcDetail, isLoading, error } = usePcDetail(pcNumber || "");
 
-// getDropdownData
+    const {data: options} = usePcListFilterOptions();
 
-// } from "../services/masterService";
+    const [form, setForm] = useState({
+        pcName: "",
+        employeeCurrent: "",
+        pcStatus: "",
+        pcCategory: "",
+        pcUsage: "",
+        pcDivision: "",
+        pcLocation: ""
+    });
 
-// import type {
+    useEffect(() => {
 
-// DropdownOptions
+        if(!pcDetail) return;
 
-// } from "../types/entity/master";
+        setForm({
 
-// function PcEditPage() {
+            pcName:
+            pcDetail.pcName,
 
-// const [pcName, setPcName] = useState("");
+            employeeCurrent:
+            pcDetail.employeeCurrent,
 
-// const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>({});
-// const [loading, setLoading] = useState<boolean>(true);
-// const [error, setError] = useState<string | null>(null);
+            pcStatus:
+            pcDetail.pcStatus,
 
-// useEffect(() => {
+            pcCategory:
+            pcDetail.pcCategory,
 
-//   const initData = async () => {
-//       try {
-//         setLoading(true);
-//         const data = await getDropdownData(); // 调用 Service 层
-//         setDropdownOptions(data);
-//       } catch (err: any) {
-//         setError(err.message || "数据加载失败");
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
+            pcUsage:
+            pcDetail.pcUsage,
 
-//     initData();
-// }, []);
+            pcDivision:
+            pcDetail.pcDivision,
 
-// if (loading) return <div>加载中...</div>;
-// if (error) return <div>错误: {error}</div>;
+            pcLocation:
+            pcDetail.pcLocation
 
-// return (
+        });
+    }, [pcDetail]);
 
-// <div>
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        return <div>Loading failed: {error.message}</div>;
+    }
 
-//   <h1>
-//     PC Edit Page
-//   </h1>
+    return (
 
-//   <div>
+        <>
+            <h1>
+                PC Edit Page
+            </h1>
 
-//     <label>
-//       PC名
-//     </label>
+            <div>
+                <h2>
+                    PC番号:
+                    {pcDetail?.pcNumber}
+                </h2>
 
-//     <br />
+                <h2>
+                    現在状況:
+                    {pcDetail?.pcStatus}
+                </h2>
+            </div>
 
-//     <input
+            <div>
+                <input
+                    value={form.pcName}
+                    onChange={(e) =>
+                        setForm({
+                        ...form,
+                        pcName:
+                            e.target.value
+                        })
+                    }
+                />
 
-//       type="text"
+                <SearchSelect
+                    value={form.employeeCurrent}
+                    options={
+                        options?.employeeName || []
+                    }
+                    placeholder="社員名"
+                    onChange={(value) => {
+                        setForm({
+                        ...form,
+                        employeeCurrent: value
+                        });
+                    }}
+                />
 
-//       value={pcName}
+                <SearchSelect
+                    value={form.pcStatus}
+                    options={
+                        options?.pcStatus || []
+                    }
+                    placeholder="状況"
+                    onChange={(value) => {
+                        setForm({
+                            ...form,
+                            pcStatus: value
+                        });
+                    }}
+                />
 
-//       onChange={(event) => {
+                <SearchSelect
+                    value={form.pcCategory}
+                    options={
+                        options?.pcCategory || []
+                    }
+                    placeholder="分類"
+                    onChange={(value) => {
+                        setForm({
+                            ...form,
+                            pcCategory: value
+                        });
+                    }}
+                />
 
-//         setPcName(
-//           event.target.value
-//         );
+                <SearchSelect
+                    value={form.pcUsage}
+                    options={
+                        options?.pcUsage || []
+                    }
+                    placeholder="用途"
+                    onChange={(value) => {
+                        setForm({
+                            ...form,
+                            pcUsage: value
+                        });
+                    }}
+                />
 
-//       }}
+                <SearchSelect
+                    value={form.pcDivision}
+                    options={
+                        options?.pcDivision || []
+                    }
+                    placeholder="区分"
+                    onChange={(value) => {
+                        setForm({
+                            ...form,
+                            pcDivision: value
+                        });
+                    }}
+                />
 
-//     />
-//     <p>入力値:{pcName}</p>
+                <SearchSelect
+                    value={form.pcLocation}
+                    options={
+                        options?.pcLocation || []
+                    }
+                    placeholder="場所"
+                    onChange={(value) => {
+                        setForm({
+                            ...form,
+                            pcLocation: value
+                        });
+                    }}
+                />
+            </div>
 
-//   </div>
+            <div>
+                <button
+                    onClick={() => { navigate(`/pc-detail/${pcDetail?.pcNumber}`) }}
+                >
+                    戻る
+                </button>
+                <button>
+                    保存
+                </button>
+            </div>
+        </>
+    );
+}
 
-//   <div>
-//     <select>
-//       <option value="">请选择状况</option>
-//       {dropdownOptions.pcStatus?.map(item => (
-//         <option key={item.value} value={item.value}>{item.label}</option>
-//       ))}
-//     </select>
-//   </div>
-//   <div>
-//     <select>
-//       <option value="">请选择分類</option>
-//       {dropdownOptions.pcCategory?.map(item => (
-//         <option key={item.value} value={item.value}>{item.label}</option>
-//       ))}
-//     </select>
-//   </div>
-//   <div>
-//     <select>
-//       <option value="">请选择用途</option>
-//       {dropdownOptions.pcUsage?.map(item => (
-//         <option key={item.value} value={item.value}>{item.label}</option>
-//       ))}
-//     </select>
-//   </div>
-//   <div>
-//     <select>
-//       <option value="">请选择区分</option>
-//       {dropdownOptions.pcDivision?.map(item => (
-//         <option key={item.value} value={item.value}>{item.label}</option>
-//       ))}
-//     </select>
-//   </div>
-//   <div>
-//     <select>
-//       <option value="">请选择場所</option>
-//       {dropdownOptions.pcLocation?.map(item => (
-//         <option key={item.value} value={item.value}>{item.label}</option>
-//       ))}
-//     </select>
-//   </div>
-// </div>
-
-// );
-
-// }
-
-// export default PcEditPage;
+export default PcEditPage;

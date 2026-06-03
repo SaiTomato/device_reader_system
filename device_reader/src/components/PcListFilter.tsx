@@ -1,75 +1,82 @@
 import { usePcListFilterOptions } from '../services/masterService.ts';
 import type { PcListFilters } from '../types/api/pcListDto.ts';
 
+import SearchSelect from './SearchSelect.tsx';
+
 type PcListFilterProps = {
   filters?: PcListFilters;
   onFilterChange?: (newFilters: PcListFilters) => void;
 };
 
 export function PcListFilter({ filters, onFilterChange }: PcListFilterProps) {
+
   // 引入我们刚刚写好的 Hook
   const { data: options, isLoading, error } = usePcListFilterOptions();
 
-  console.log("=== 检查 options 的真实内容 ===", options);
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    if (onFilterChange && filters) {
-      onFilterChange({ ...filters, [name]: value });
-    }
-  };
-
-  if (isLoading) return <div className="text-gray-500 text-sm">正在加载筛选选项...</div>;
-  if (error) return <div className="text-red-500 text-sm">选项加载失败</div>;
+  if (isLoading) return <div className="text-gray-500 text-sm">Dropdown Loading...</div>;
+  if (error) return <div className="text-red-500 text-sm">Dropdown Loading Failed</div>;
 
   return (
     <div className="filter-area">
       {/* 1. 社員名 */}
-      <select name="employeeName" value={filters?.employeeName || ''} onChange={handleChange}>
-        <option value="">全社員</option>
-        {options?.employeeName?.map(opt => (
-          <option key={opt} value={opt}>{opt}</option>
-        ))}
-      </select>
+      <SearchSelect
+        placeholder="全社員"
+        value={filters?.employeeName || ''}
+        options={options?.employeeName || []}
+        onChange={(value) => {
+          onFilterChange?.({ ...filters!, employeeName: value });
+        }}
+      />
 
       {/* 2. PC 状況 */}
-      <select name="pcStatus" value={filters?.pcStatus || ''} onChange={handleChange}>
-        <option value="">全状況</option>
-        {options?.pcStatus?.map(opt => (
-          <option key={opt} value={opt}>{opt}</option>
-        ))}
-      </select>
+      <SearchSelect
+        placeholder="全状況"
+        value={filters?.pcStatus || ''}
+        options={options?.pcStatus || []}
+        onChange={(value) => {
+          onFilterChange?.({ ...filters!, pcStatus: value });
+        }}
+      />
 
       {/* 3. PC 分類 */}
-      <select name="pcCategory" value={filters?.pcCategory || ''} onChange={handleChange}>
-        <option value="">全分类</option>
-        {options?.pcCategory?.map(opt => (
-          <option key={opt} value={opt}>{opt}</option>
-        ))}
-      </select>
+      <SearchSelect
+        placeholder="全分类"
+        value={filters?.pcCategory || ''}
+        options={options?.pcCategory || []}
+        onChange={(value) => {
+          onFilterChange?.({ ...filters!, pcCategory: value });
+        }}
+      />
 
       {/* 4. PC 用途 */}
-      <select name="pcUsage" value={filters?.pcUsage || ''} onChange={handleChange}>
-        <option value="">全用途</option>
-        {options?.pcUsage?.map(opt => (
-          <option key={opt} value={opt}>{opt}</option>
-        ))}
-      </select>
+      <SearchSelect
+        placeholder="全用途"
+        value={filters?.pcUsage || ''}
+        options={options?.pcUsage || []}
+        onChange={(value) => {
+          onFilterChange?.({ ...filters!, pcUsage: value });
+        }}
+      />
 
       {/* 5. PC 区分 */}
-      <select name="pcDivision" value={filters?.pcDivision || ''} onChange={handleChange}>
-        <option value="">全区分</option>
-        {options?.pcDivision?.map(opt => (
-          <option key={opt} value={opt}>{opt}</option>
-        ))}
-      </select>
+      <SearchSelect
+        placeholder="全区分"
+        value={filters?.pcDivision || ''}
+        options={options?.pcDivision || []}
+        onChange={(value) => {
+          onFilterChange?.({ ...filters!, pcDivision: value });
+        }}
+      />
 
       {/* 6. PC 場所 */}
-      <select name="pcLocation" value={filters?.pcLocation || ''} onChange={handleChange}>
-        <option value="">全場所</option>
-        {options?.pcLocation?.map(opt => (
-          <option key={opt} value={opt}>{opt}</option>
-        ))}
-      </select>
+      <SearchSelect
+        placeholder="全場所"
+        value={filters?.pcLocation || ''}
+        options={options?.pcLocation || []}
+        onChange={(value) => {
+          onFilterChange?.({ ...filters!, pcLocation: value });
+        }}
+      />
     </div>
   );
 }

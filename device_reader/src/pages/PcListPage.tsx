@@ -8,42 +8,125 @@ import PcListFilter from "../components/PcListFilter"; // 👈 1. 引入新组�
 function PcListPage() {
   const navigate = useNavigate();
 
-  // 用 useState 托住当前的筛选状态
-  const [filters, setFilters] = useState<PcListFilters>({
+  const emptyFilters: PcListFilters = {
     employeeName: "",
     pcStatus: "",
     pcCategory: "",
     pcUsage: "",
     pcDivision: "",
     pcLocation: "",
-  });
+  };
+
+  const [filters, setFilters] =
+    useState<PcListFilters>(emptyFilters);
+
+  const [searchFilters, setSearchFilters] =
+    useState<PcListFilters>(emptyFilters);
   
-  // 👈 2. 像调用普通函数一样，直接传入 filters 状态
-  const { data: pcList, isLoading, error } = usePcList(filters);
+  const cleanSearchFilters =
+  Object.fromEntries(
+    Object.entries(searchFilters)
+      .filter(([, value]) => value !== "")
+  ) as PcListFilters;
+
+  const {
+    data: pcList,
+    isLoading,
+    error
+  } = usePcList(cleanSearchFilters);
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">PC List Page</h1>
+    <>
 
-      {/* 挂载筛选子组件 */}
-      <PcListFilter filters={filters} onFilterChange={setFilters} />
+      <h1>
+        PC List Page
+      </h1>
 
-      {/* 数据渲染区域保持原样 */}
-      {!isLoading && !error && (
+      <PcListFilter
+        filters={filters}
+        onFilterChange={setFilters}
+      />
+
+      <div className="flex gap-2 mt-4">
+
+        <button
+          onClick={() => {
+
+            setFilters(emptyFilters);
+            setSearchFilters(emptyFilters);
+
+          }}
+        >
+          Reset
+        </button>
+
+        <button
+          onClick={() => {
+
+            setSearchFilters(filters);
+
+          }}
+        >
+          Search
+        </button>
+
+      </div>
+
+      {isLoading && (
+
+        <div>
+          搜索中...
+        </div>
+
+      )}
+
+      {error && (
+
+        <div>
+          加载失败
+        </div>
+
+      )}
+
+      {!isLoading &&
+      !error &&
+      (pcList?.length ?? 0) === 0 && (
+
+        <div>
+          没有符合条件的数据
+        </div>
+
+      )}
+
+      {!isLoading &&
+      !error &&
+      (pcList?.length ?? 0) > 0 && (
+
         <div className="grid gap-4">
+
           {pcList?.map((pc) => (
+
             <PcCard
               key={pc.pcNumber}
               pcName={pc.pcName}
               pcNumber={pc.pcNumber}
               employeeName={pc.employeeCurrent}
-              onDetailClick={() => navigate(`/pc-detail/${pc.pcNumber}`)}
+              onDetailClick={() =>
+                navigate(
+                  `/pc-detail/${pc.pcNumber}`
+                )
+              }
             />
+
           ))}
+
         </div>
+
       )}
-    </div>
-  );
+
+    </>
+
+    );
 }
 
 export default PcListPage;
