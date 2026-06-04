@@ -12,6 +12,8 @@ import HomePage from "../pages/HomePage";
 import PcListPage from "../pages/PcListPage";
 import PcDetailPage from "../pages/PcDetailPage";
 import PcEditPage from "../pages/PcEditPage";
+import UpdateCompletePage from "../pages/UpdateCompletePage";
+import LoanDocumentPage from "../pages/LoanDocumentPage";
 
 function AppRouter() {
 
@@ -39,6 +41,16 @@ return (
     <Route
       path="/pc-edit/:pcNumber"
       element={<MainLayout><PcEditPage /></MainLayout>}
+    />
+
+    <Route
+      path="/update-complete"
+      element={<UpdateCompletePage />}
+    />
+
+    <Route
+      path="/loan-document/:pcNumber"
+      element={<LoanDocumentPage />}
     />
 
   </Routes>

@@ -39,7 +39,7 @@ function PcListPage() {
     <>
 
       <h1>
-        PC List Page
+        PC一覧
       </h1>
 
       <PcListFilter
@@ -57,7 +57,7 @@ function PcListPage() {
 
           }}
         >
-          Reset
+          フィルタクリア
         </button>
 
         <button
@@ -67,7 +67,7 @@ function PcListPage() {
 
           }}
         >
-          Search
+          検索
         </button>
 
       </div>

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { usePcDetail } from '../services/pcService';
+import { updatePcInfo, usePcDetail } from '../services/pcService';
 import { usePcListFilterOptions } from '../services/masterService';
 import SearchSelect from '../components/SearchSelect';
 import { useNavigate } from "react-router-dom";
+import { CURRENT_USER } from "../constants/auth";
 
 
 function PcEditPage() {
@@ -15,13 +16,16 @@ function PcEditPage() {
     const {data: options} = usePcListFilterOptions();
 
     const [form, setForm] = useState({
+        pcNumber: pcNumber || "",
         pcName: "",
         employeeCurrent: "",
         pcStatus: "",
         pcCategory: "",
         pcUsage: "",
         pcDivision: "",
-        pcLocation: ""
+        pcLocation: "",
+        pcRemark: "",
+        updatedBy: ""
     });
 
     useEffect(() => {
@@ -30,11 +34,10 @@ function PcEditPage() {
 
         setForm({
 
-            pcName:
-            pcDetail.pcName,
+            pcNumber: pcDetail.pcNumber,
 
-            employeeCurrent:
-            pcDetail.employeeCurrent,
+            pcName: pcDetail.pcName,
+            employeeCurrent: pcDetail.employeeCurrent,
 
             pcStatus:
             pcDetail.pcStatus,
@@ -49,10 +52,34 @@ function PcEditPage() {
             pcDetail.pcDivision,
 
             pcLocation:
-            pcDetail.pcLocation
+            pcDetail.pcLocation,
+
+            pcRemark: "", // pcDetailに備考がないため、初期値は空文字
+
+            updatedBy: CURRENT_USER.email // 追加: 更新者のメールアドレスを設定
 
         });
     }, [pcDetail]);
+
+    const handleUpdate = async () => {
+
+        if(form.pcCategory.includes("貸出")){
+            navigate(`/loan-document/${pcNumber}`,
+                {
+                    state: {
+                        updateData: form
+                    }
+                }
+            );
+            return;
+        }
+        
+        const result = await updatePcInfo(form);
+
+        if(result.updated){
+            navigate("/update-complete");
+        }
+    };
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -65,7 +92,7 @@ function PcEditPage() {
 
         <>
             <h1>
-                PC Edit Page
+                PC編集
             </h1>
 
             <div>
@@ -81,6 +108,9 @@ function PcEditPage() {
             </div>
 
             <div>
+                <label>
+                    PC名:
+                </label>
                 <input
                     value={form.pcName}
                     onChange={(e) =>
@@ -92,6 +122,9 @@ function PcEditPage() {
                     }
                 />
 
+                <label>
+                    社員名:
+                </label>
                 <SearchSelect
                     value={form.employeeCurrent}
                     options={
@@ -106,6 +139,9 @@ function PcEditPage() {
                     }}
                 />
 
+                <label>
+                    状況:
+                </label>
                 <SearchSelect
                     value={form.pcStatus}
                     options={
@@ -120,6 +156,9 @@ function PcEditPage() {
                     }}
                 />
 
+                <label>
+                    分類:
+                </label>
                 <SearchSelect
                     value={form.pcCategory}
                     options={
@@ -134,6 +173,9 @@ function PcEditPage() {
                     }}
                 />
 
+                <label>
+                    用途:
+                </label>
                 <SearchSelect
                     value={form.pcUsage}
                     options={
@@ -148,6 +190,9 @@ function PcEditPage() {
                     }}
                 />
 
+                <label>
+                    区分:
+                </label>
                 <SearchSelect
                     value={form.pcDivision}
                     options={
@@ -162,6 +207,9 @@ function PcEditPage() {
                     }}
                 />
 
+                <label>
+                    場所:
+                </label>
                 <SearchSelect
                     value={form.pcLocation}
                     options={
@@ -175,6 +223,21 @@ function PcEditPage() {
                         });
                     }}
                 />
+
+                <label>
+                    備考:
+                </label>
+                <textarea
+                    value={form.pcRemark}
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            pcRemark:
+                            e.target.value
+                        })
+                    }
+                    rows={4}
+                />
             </div>
 
             <div>
@@ -183,8 +246,10 @@ function PcEditPage() {
                 >
                     戻る
                 </button>
-                <button>
-                    保存
+                <button
+                    onClick={handleUpdate}
+                >
+                    更新
                 </button>
             </div>
         </>

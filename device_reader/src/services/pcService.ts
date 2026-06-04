@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { requestGas } from '../types/api/client';
 import type { PcDetailResponse } from '../types/api/pcDetailDto';
 import type { PcListFilters, PcListResponse } from '../types/api/pcListDto';
+import type { UpdatePcRequest, UpdatePcResponse } from '../types/api/updatePcDto';
 
 export function usePcDetail(pcNumber: string) {
   return useQuery<PcDetailResponse>({
@@ -19,4 +20,15 @@ export function usePcList(filters: PcListFilters) {
     // ⭕ 关键：把 filters 作为参数，打包丢给统一的 requestGas 函数
     queryFn: () => requestGas<PcListResponse>("getPcList", filters),
   });
+}
+
+export async function updatePcInfo(
+  updateData: UpdatePcRequest
+): Promise<UpdatePcResponse> {
+
+  return requestGas<UpdatePcResponse>(
+    "updatePcInfo",
+    updateData
+  );
+
 }
