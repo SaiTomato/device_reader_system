@@ -28,6 +28,8 @@ function PcEditPage() {
         updatedBy: ""
     });
 
+    const [originalPcName, setOriginalPcName] = useState("");
+
     useEffect(() => {
 
         if(!pcDetail) return;
@@ -37,28 +39,28 @@ function PcEditPage() {
             pcNumber: pcDetail.pcNumber,
 
             pcName: pcDetail.pcName,
+
             employeeCurrent: pcDetail.employeeCurrent,
 
-            pcStatus:
-            pcDetail.pcStatus,
+            pcStatus: pcDetail.pcStatus,
 
-            pcCategory:
-            pcDetail.pcCategory,
+            pcCategory: pcDetail.pcCategory,
 
-            pcUsage:
-            pcDetail.pcUsage,
+            pcUsage: pcDetail.pcUsage,
 
-            pcDivision:
-            pcDetail.pcDivision,
+            pcDivision: pcDetail.pcDivision,
 
-            pcLocation:
-            pcDetail.pcLocation,
+            pcLocation: pcDetail.pcLocation,
 
             pcRemark: "", // pcDetailに備考がないため、初期値は空文字
 
             updatedBy: CURRENT_USER.email // 追加: 更新者のメールアドレスを設定
 
         });
+
+        setOriginalPcName(
+            pcDetail.pcName
+        );
     }, [pcDetail]);
 
     const handleUpdate = async () => {
@@ -67,7 +69,8 @@ function PcEditPage() {
             navigate(`/loan-document/${pcNumber}`,
                 {
                     state: {
-                        updateData: form
+                        updateData: form,
+                        originalPcName
                     }
                 }
             );

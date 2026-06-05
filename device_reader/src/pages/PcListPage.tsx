@@ -50,6 +50,11 @@ function PcListPage() {
       <div className="flex gap-2 mt-4">
 
         <button
+          onClick={() => navigate(`/`)}
+        >
+          ホームに戻る
+        </button>
+        <button
           onClick={() => {
 
             setFilters(emptyFilters);
@@ -68,6 +73,12 @@ function PcListPage() {
           }}
         >
           検索
+        </button>
+
+        <button
+          onClick={() => navigate(`/pc-register`)}
+        >
+          新規登録
         </button>
 
       </div>

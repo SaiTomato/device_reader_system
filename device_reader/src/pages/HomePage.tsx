@@ -38,6 +38,7 @@ function HomePage() {
 
           <button
             className="bg-blue-600 text-white py-3 rounded-lg text-lg"
+            onClick={() => navigate(`/qr-scan`)}
           >
             QR読取
           </button>
@@ -51,6 +52,7 @@ function HomePage() {
 
           <button
             className="bg-gray-500 text-white py-3 rounded-lg text-lg"
+            onClick={() => { navigate(`/history`) }}
           >
             履歴
           </button>

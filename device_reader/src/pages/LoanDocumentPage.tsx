@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { updatePcInfo } from "../services/pcService";
+import { useReactToPrint } from "react-to-print";
 
 
 function LoanDocumentPage() {
@@ -10,7 +11,9 @@ function LoanDocumentPage() {
   const location = useLocation();
 
   const updateData = location.state?.updateData;
+  const originalPcName = location.state?.originalPcName;
   const [printed, setPrinted] = useState(false);
+  const printRef = useRef<HTMLDivElement>(null);
 
   const handleComplete = async () => {
     const result =
@@ -24,25 +27,80 @@ function LoanDocumentPage() {
     }
   };
 
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+    onAfterPrint: () => {
+      setPrinted(true);
+    }
+  });
+
+  if(!updateData){
+    return (
+      <>
+        <div>
+          貸出書を表示できません。
+        </div>
+
+        <button
+            onClick={() => { navigate(`/pc-list`) }}
+          >
+            PC一覧に戻る
+        </button>
+      </>
+    );
+  }
+
   return (
 
     <>
+      <div ref={printRef}
+        className="
+        max-w-3xl
+        mx-auto
+        p-8
+        bg-white
+      ">
+        <h1>
+          貸出書
+        </h1>
 
-      <h1>
-        貸出書
-      </h1>
 
-      <h2>貸出情報</h2>
+        <div>
+          <p>借用者名前 : {updateData?.employeeCurrent}</p>
+        </div>
+        <div>
+          <p>日付 : {new Date().toLocaleDateString()}</p>
+        </div>
 
-      <p>PC番号: {updateData?.pcNumber}</p>
+        <div>
+          <p>PC番号 : {updateData?.pcNumber}</p>
+        </div>
+        <div>
+          <p>品名 : {updateData?.pcName}</p>
+        </div>
+        <div>
+          <p>以前使用した品名 : {originalPcName}</p>
+        </div>
 
-      <p>PC名: {updateData?.pcName}</p>
+        <div>
+          <p>使用場所（例: 自宅/本社/現場）: {updateData?.pcLocation}</p>
+        </div>
 
-      <p>使用者: {updateData?.employeeCurrent}</p>
+        <div>
+          <p>
+            上記の品目をプロジェクト開発用として貸出します。
+          </p>
 
-      <p>分類: {updateData?.pcCategory}</p>
+          <p>
+            プロジェクトが終了したら会社に返納します。
+          </p>
+        </div>
 
-      <p>貸出日: {new Date().toLocaleDateString()}</p>
+        <div className="mt-24">
+          署名
+          <div className="border-b mt-8"></div>
+        </div>
+      </div>
 
       <div>
         <button
@@ -52,10 +110,7 @@ function LoanDocumentPage() {
           戻る
         </button>
         <button
-          onClick={() => {
-            window.print();
-            setPrinted(true);
-          }}
+          onClick={handlePrint}
         >
           印刷
         </button>

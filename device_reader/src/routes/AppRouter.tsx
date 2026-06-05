@@ -14,51 +14,69 @@ import PcDetailPage from "../pages/PcDetailPage";
 import PcEditPage from "../pages/PcEditPage";
 import UpdateCompletePage from "../pages/UpdateCompletePage";
 import LoanDocumentPage from "../pages/LoanDocumentPage";
+import QrScanPage from "../pages/QrScanPage";
+import QrCodePage from "../pages/QrCodePage";
+import HistoryPage from "../pages/HistoryPage";
+import PcRegisterPage from "../pages/PcRegisterPage";
 
 function AppRouter() {
 
-return (
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={<MainLayout><HomePage /></MainLayout>}
+        />
 
-<BrowserRouter>
+        <Route
+          path="/pc-list"
+          element={<MainLayout><PcListPage /></MainLayout>}
+        />
 
-  <Routes>
+        <Route
+          path="/pc-detail/:pcNumber"
+          element={<MainLayout><PcDetailPage /></MainLayout>}
+        />
 
-    <Route
-      path="/"
-      element={<MainLayout><HomePage /></MainLayout>}
-    />
+        <Route
+          path="/pc-edit/:pcNumber"
+          element={<MainLayout><PcEditPage /></MainLayout>}
+        />
 
-    <Route
-      path="/pc-list"
-      element={<MainLayout><PcListPage /></MainLayout>}
-    />
+        <Route
+          path="/update-complete"
+          element={<UpdateCompletePage />}
+        />
 
-    <Route
-      path="/pc-detail/:pcNumber"
-      element={<MainLayout><PcDetailPage /></MainLayout>}
-    />
+        <Route
+          path="/loan-document/:pcNumber"
+          element={<LoanDocumentPage />}
+        />
 
-    <Route
-      path="/pc-edit/:pcNumber"
-      element={<MainLayout><PcEditPage /></MainLayout>}
-    />
+        <Route
+          path="/qr-scan"
+          element={<QrScanPage />}
+        />
 
-    <Route
-      path="/update-complete"
-      element={<UpdateCompletePage />}
-    />
+        <Route
+          path="/qr-code/:pcNumber"
+          element={<QrCodePage />}
+        />
 
-    <Route
-      path="/loan-document/:pcNumber"
-      element={<LoanDocumentPage />}
-    />
+        <Route
+          path="/history"
+          element={<HistoryPage />}
+        />
 
-  </Routes>
+        <Route
+          path="/pc-register"
+          element={<PcRegisterPage />}
+        />
 
-</BrowserRouter>
-
-);
-
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default AppRouter;

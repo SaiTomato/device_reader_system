@@ -81,13 +81,25 @@ function PcDetailPage() {
         <button
           onClick={() => { navigate(`/pc-list`) }}
         >
-          戻る
+          PC一覧に戻る
+        </button>
+
+        <button
+          onClick={() => { navigate(`/qr-scan`) }}
+        >
+          QRスキャンに戻る
         </button>
 
         <button
           onClick={() => { navigate(`/pc-edit/${pcDetail?.pcNumber}`) }}
         >
           編集
+        </button>
+
+        <button
+          onClick={() => { navigate(`/qr-code/${pcDetail?.pcNumber}`) }}
+        >
+          QR表示
         </button>
       </div>
     </>
