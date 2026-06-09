@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Html5QrcodeScanner } from "html5-qrcode";
+import { showError } from "../utils/error";
 
 function QrScanPage() {
 
@@ -49,6 +50,7 @@ function QrScanPage() {
           console.error(
             err
           );
+          showError(err);
 
         }
 

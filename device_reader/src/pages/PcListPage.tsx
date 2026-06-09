@@ -94,7 +94,7 @@ function PcListPage() {
       {error && (
 
         <div>
-          加载失败
+          ロード失敗
         </div>
 
       )}

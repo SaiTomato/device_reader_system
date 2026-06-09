@@ -3,6 +3,7 @@ import { requestGas } from '../types/api/client';
 import type { PcDetailResponse } from '../types/api/pcDetailDto';
 import type { PcListFilters, PcListResponse } from '../types/api/pcListDto';
 import type { UpdatePcRequest, UpdatePcResponse } from '../types/api/updatePcDto';
+import type { RegisterPcRequest, RegisterPcResponse } from '../types/api/pcRegisterDto';
 
 export function usePcDetail(pcNumber: string) {
   return useQuery<PcDetailResponse>({
@@ -29,6 +30,17 @@ export async function updatePcInfo(
   return requestGas<UpdatePcResponse>(
     "updatePcInfo",
     updateData
+  );
+
+}
+
+export async function registerPc(
+  request: RegisterPcRequest
+): Promise<RegisterPcResponse> {
+
+  return requestGas<RegisterPcResponse>(
+    "registerPc",
+    request
   );
 
 }

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { updatePcInfo } from "../services/pcService";
 import { useReactToPrint } from "react-to-print";
+import { showError } from "../utils/error";
 
 
 function LoanDocumentPage() {
@@ -16,14 +17,18 @@ function LoanDocumentPage() {
   const printRef = useRef<HTMLDivElement>(null);
 
   const handleComplete = async () => {
-    const result =
-      await updatePcInfo(
-        updateData
-      );
-    if(result.updated){
-      navigate(
-        "/update-complete"
-      );
+    try {
+      const result =
+        await updatePcInfo(
+          updateData
+        );
+      if(result.updated){
+        navigate(
+          "/update-complete"
+        );
+      }
+    } catch (error) {
+      showError(error)
     }
   };
 

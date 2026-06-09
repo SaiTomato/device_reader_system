@@ -3,6 +3,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { toPng } from "html-to-image";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import { showError } from "../utils/error";
 
 function QrCodePage() {
 
@@ -17,13 +18,18 @@ function QrCodePage() {
   const handleDownload = async () => {
     if(!printRef.current) return;
 
-    const dataUrl =
+    try{
+      const dataUrl =
       await toPng(printRef.current, {backgroundColor: "#ffffff"});
 
-    const link = document.createElement("a");
-    link.download = `${pcNumber}.png`;
-    link.href = dataUrl;
-    link.click();
+      const link = document.createElement("a");
+      link.download = `${pcNumber}.png`;
+      link.href = dataUrl;
+      link.click();
+
+    }catch(err){
+      showError(err);
+    }
   };
 
   if(!pcNumber){

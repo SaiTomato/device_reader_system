@@ -5,6 +5,7 @@ import { usePcListFilterOptions } from '../services/masterService';
 import SearchSelect from '../components/SearchSelect';
 import { useNavigate } from "react-router-dom";
 import { CURRENT_USER } from "../constants/auth";
+import { showError } from '../utils/error';
 
 
 function PcEditPage() {
@@ -76,11 +77,15 @@ function PcEditPage() {
             );
             return;
         }
-        
-        const result = await updatePcInfo(form);
+        try {
+            const result = await updatePcInfo(form);
 
-        if(result.updated){
-            navigate("/update-complete");
+            if(result.updated){
+                navigate("/update-complete");
+            }
+            
+        } catch (error) {
+            showError(error)
         }
     };
 
