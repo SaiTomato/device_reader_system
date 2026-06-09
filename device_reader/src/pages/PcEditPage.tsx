@@ -8,6 +8,8 @@ import { CURRENT_USER } from "../constants/auth";
 import { showError } from '../utils/error';
 import { PrimaryButton, SecondaryButton } from '../components/common/Button';
 import PageHeader from '../components/common/PageHeader';
+import FormInput from '../components/common/FormInput';
+import TextareaInput from '../components/common/TextareaInput';
 
 
 function PcEditPage() {
@@ -121,24 +123,15 @@ function PcEditPage() {
             </div>
 
             <div>
-                <label>
-                    PC名:
-                </label>
-                <input
+                <FormInput
+                    label="PC名"
+                    type="text"
                     value={form.pcName}
-                    onChange={(e) =>
-                        setForm({
-                        ...form,
-                        pcName:
-                            e.target.value
-                        })
-                    }
+                    onChange={(e) => setForm({...form, pcName: e.target.value})}
                 />
 
-                <label>
-                    社員名:
-                </label>
                 <SearchSelect
+                    label="社員名"
                     value={form.employeeCurrent}
                     options={
                         options?.employeeName || []
@@ -152,10 +145,8 @@ function PcEditPage() {
                     }}
                 />
 
-                <label>
-                    状況:
-                </label>
                 <SearchSelect
+                    label="PC状況"
                     value={form.pcStatus}
                     options={
                         options?.pcStatus || []
@@ -169,10 +160,8 @@ function PcEditPage() {
                     }}
                 />
 
-                <label>
-                    分類:
-                </label>
                 <SearchSelect
+                    label="PC分類"
                     value={form.pcCategory}
                     options={
                         options?.pcCategory || []
@@ -186,10 +175,8 @@ function PcEditPage() {
                     }}
                 />
 
-                <label>
-                    用途:
-                </label>
                 <SearchSelect
+                    label="PC用途"
                     value={form.pcUsage}
                     options={
                         options?.pcUsage || []
@@ -203,10 +190,8 @@ function PcEditPage() {
                     }}
                 />
 
-                <label>
-                    区分:
-                </label>
                 <SearchSelect
+                    label="PC区分"
                     value={form.pcDivision}
                     options={
                         options?.pcDivision || []
@@ -220,10 +205,8 @@ function PcEditPage() {
                     }}
                 />
 
-                <label>
-                    場所:
-                </label>
                 <SearchSelect
+                    label="PC場所"
                     value={form.pcLocation}
                     options={
                         options?.pcLocation || []
@@ -237,18 +220,10 @@ function PcEditPage() {
                     }}
                 />
 
-                <label>
-                    備考:
-                </label>
-                <textarea
+                <TextareaInput
+                    label="備考"
                     value={form.pcRemark}
-                    onChange={(e) =>
-                        setForm({
-                            ...form,
-                            pcRemark:
-                            e.target.value
-                        })
-                    }
+                    onChange={(e) => setForm({...form, pcRemark: e.target.value})}
                     rows={4}
                 />
             </div>

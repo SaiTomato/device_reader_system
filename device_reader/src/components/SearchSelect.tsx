@@ -2,6 +2,8 @@ import Select from "react-select";
 
 type SearchSelectProps = {
 
+  label?: string;
+
   value: string;
 
   options: string[];
@@ -10,9 +12,15 @@ type SearchSelectProps = {
 
   onChange: (value: string) => void;
 
+  isClearable?: boolean;
+
+  isDisabled?: boolean;
+
 };
 
 function SearchSelect({
+
+  label,
 
   value,
 
@@ -23,59 +31,56 @@ function SearchSelect({
   onChange
 
 }: SearchSelectProps) {
-
   return (
+    <div
+      className="
+        flex
+        flex-col
+        gap-1
+      "
+    >
+      <label
+        className="
+          font-medium
+        "
+      >
+        {label}
+      </label>
 
-    <Select
+      <Select
 
-      placeholder={placeholder}
+        placeholder={placeholder}
 
-      isClearable
+        isClearable
 
-      isSearchable
+        isSearchable
 
-      options={
+        options={
 
-        options.map(item => ({
+          options.map(item => ({
 
-          value: item,
+            value: item,
 
-          label: item
+            label: item
 
-        }))
+          }))
 
-      }
+        }
 
-      value={
+        value={value? {value,label: value}: null}
 
-        value
+        onChange={(selected) =>
 
-          ? {
+          onChange(
 
-              value,
+            selected?.value || ""
 
-              label: value
+          )
 
-            }
-
-          : null
-
-      }
-
-      onChange={(selected) =>
-
-        onChange(
-
-          selected?.value || ""
-
-        )
-
-      }
-
-    />
-
+        }
+      />
+    </div>
   );
-
 }
 
 export default SearchSelect;

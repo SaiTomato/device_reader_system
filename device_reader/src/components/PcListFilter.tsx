@@ -20,6 +20,7 @@ export function PcListFilter({ filters, onFilterChange }: PcListFilterProps) {
     <div className="filter-area">
       {/* 1. 社員名 */}
       <SearchSelect
+        label="社員名"
         placeholder="全社員"
         value={filters?.employeeName || ''}
         options={options?.employeeName || []}
@@ -30,6 +31,7 @@ export function PcListFilter({ filters, onFilterChange }: PcListFilterProps) {
 
       {/* 2. PC 状況 */}
       <SearchSelect
+        label="PC状況"
         placeholder="全状況"
         value={filters?.pcStatus || ''}
         options={options?.pcStatus || []}
@@ -40,7 +42,8 @@ export function PcListFilter({ filters, onFilterChange }: PcListFilterProps) {
 
       {/* 3. PC 分類 */}
       <SearchSelect
-        placeholder="全分类"
+        label="PC分類"
+        placeholder="全分類"
         value={filters?.pcCategory || ''}
         options={options?.pcCategory || []}
         onChange={(value) => {
@@ -50,6 +53,7 @@ export function PcListFilter({ filters, onFilterChange }: PcListFilterProps) {
 
       {/* 4. PC 用途 */}
       <SearchSelect
+        label="PC用途"
         placeholder="全用途"
         value={filters?.pcUsage || ''}
         options={options?.pcUsage || []}
@@ -60,6 +64,7 @@ export function PcListFilter({ filters, onFilterChange }: PcListFilterProps) {
 
       {/* 5. PC 区分 */}
       <SearchSelect
+        label="PC区分"
         placeholder="全区分"
         value={filters?.pcDivision || ''}
         options={options?.pcDivision || []}
@@ -70,6 +75,7 @@ export function PcListFilter({ filters, onFilterChange }: PcListFilterProps) {
 
       {/* 6. PC 場所 */}
       <SearchSelect
+        label="PC場所"
         placeholder="全場所"
         value={filters?.pcLocation || ''}
         options={options?.pcLocation || []}

@@ -8,6 +8,7 @@ import { CURRENT_USER } from "../constants/auth";
 import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 import PageHeader from "../components/common/PageHeader";
+import FormInput from "../components/common/FormInput";
 
 function PcRegisterPage() {
   const navigate = useNavigate();
@@ -67,22 +68,22 @@ function PcRegisterPage() {
       <PageHeader title="PC新規登録"/>
 
       <div>
-        <label>PC番号:</label>
-        <input 
-          type="text" 
-          value={form.pcNumber} 
-          onChange={(e) => setForm({...form, pcNumber: e.target.value})} 
+        <FormInput
+          label="PC番号"
+          type="text"
+          value={form.pcNumber}
+          onChange={(e) => setForm({...form, pcNumber: e.target.value})}
         />
 
-        <label>PC名:</label>
-        <input 
-          type="text" 
-          value={form.pcName} 
-          onChange={(e) => setForm({...form, pcName: e.target.value})} 
+        <FormInput
+          label="PC名"
+          type="text"
+          value={form.pcName}
+          onChange={(e) => setForm({...form, pcName: e.target.value})}
         />
 
-        <label>現使用者:</label>
         <SearchSelect
+          label="現使用者"
           value={form.employeeCurrent}
           options={
             options?.employeeName || []
@@ -96,8 +97,8 @@ function PcRegisterPage() {
           }}
         />
 
-        <label>PC状況:</label>
         <SearchSelect
+          label="PC状況"
           value={form.pcStatus}
           options={
             options?.pcStatus || []
@@ -111,8 +112,8 @@ function PcRegisterPage() {
           }}
         />
 
-        <label>PC分類:</label>
         <SearchSelect
+          label="PC分類"
           value={form.pcCategory}
           options={
             options?.pcCategory || []
@@ -126,8 +127,8 @@ function PcRegisterPage() {
           }}
         />
 
-        <label>PC用途:</label>
         <SearchSelect
+          label="PC用途"
           value={form.pcUsage}
           options={
             options?.pcUsage || []
@@ -141,8 +142,8 @@ function PcRegisterPage() {
           }}
         />
 
-        <label>PC区分:</label>
         <SearchSelect
+          label="PC区分"
           value={form.pcDivision}
           options={
             options?.pcDivision || []
@@ -156,8 +157,8 @@ function PcRegisterPage() {
           }}
         />
 
-        <label>PC場所:</label>
         <SearchSelect
+          label="PC場所"
           value={form.pcLocation}
           options={
             options?.pcLocation || []
@@ -171,81 +172,81 @@ function PcRegisterPage() {
           }}
         />
 
-        <label>PCメーカー:</label>
-        <input 
-          type="text" 
-          value={form.pcMaker} 
-          onChange={(e) => setForm({...form, pcMaker: e.target.value})} 
+        <FormInput
+          label="PCメーカー"
+          type="text"
+          value={form.pcMaker}
+          onChange={(e) => setForm({...form, pcMaker: e.target.value})}
         />
 
-        <label>PCモデル:</label>
-        <input 
-          type="text" 
-          value={form.pcModel} 
-          onChange={(e) => setForm({...form, pcModel: e.target.value})} 
+        <FormInput
+          label="PCモデル"
+          type="text"
+          value={form.pcModel}
+          onChange={(e) => setForm({...form, pcModel: e.target.value})}
         />
 
-        <label>PC CPU:</label>
-        <input 
-          type="text" 
-          value={form.pcCpu} 
-          onChange={(e) => setForm({...form, pcCpu: e.target.value})} 
+        <FormInput
+          label="CPU"
+          type="text"
+          value={form.pcCpu}
+          onChange={(e) => setForm({...form, pcCpu: e.target.value})}
         />
 
-        <label>PC RAM:</label>
-        <input 
-          type="text" 
-          value={form.pcRam} 
-          onChange={(e) => setForm({...form, pcRam: e.target.value})} 
+        <FormInput
+          label="RAM"
+          type="text"
+          value={form.pcRam}
+          onChange={(e) => setForm({...form, pcRam: e.target.value})}
         />
 
-        <label>PC購入日:</label>
-        <input 
+        <FormInput
+          label="PC購入日"
           type="date" 
-          value={form.pcBuyDate} 
-          onChange={(e) => setForm({...form, pcBuyDate: e.target.value})} 
+          value={form.pcBuyDate}
+          onChange={(e) => setForm({...form, pcBuyDate: e.target.value})}
         />
 
-        <label>PC OS:</label>
-        <input 
+        <FormInput
+          label="PC OS"
           type="text" 
-          value={form.pcOs} 
-          onChange={(e) => setForm({...form, pcOs: e.target.value})} 
+          value={form.pcOs}
+          onChange={(e) => setForm({...form, pcOs: e.target.value})}
         />
 
-        <label>PC OSライセンス:</label>
-        <input 
+        <FormInput
+          label="PC OSライセンス"
           type="text" 
-          value={form.pcOsLicense} 
-          onChange={(e) => setForm({...form, pcOsLicense: e.target.value})} 
+          value={form.pcOsLicense}
+          onChange={(e) => setForm({...form, pcOsLicense: e.target.value})}
         />
 
-        {/* <label>PCバックアップ日:</label>
-        <input 
+        {/* <FormInput
+          label="PCバックアップ日"
           type="date" 
-          value={form.pcBackupDate} 
-          onChange={(e) => setForm({...form, pcBackupDate: e.target.value})} 
+          value={form.pcBackupDate}
+          onChange={(e) => setForm({...form, pcBackupDate: e.target.value})}
         /> */}
 
-        <label>PCパスワード:</label>
-        <input 
+        <FormInput
+          label="PCパスワード"
           type="text" 
-          value={form.pcPassword} 
-          onChange={(e) => setForm({...form, pcPassword: e.target.value})} 
+          value={form.pcPassword}
+          onChange={(e) => setForm({...form, pcPassword: e.target.value})}
         />
 
-        <label>PC Officeライセンス:</label>
-        <input 
+        <FormInput
+          label="PC Officeライセンス"
           type="text" 
-          value={form.pcOfficeLicense} 
-          onChange={(e) => setForm({...form, pcOfficeLicense: e.target.value})} 
+          value={form.pcOfficeLicense}
+          onChange={(e) => setForm({...form, pcOfficeLicense: e.target.value})}
         />
 
-        <label>PC IPアドレス:</label>
-        <input 
+        <FormInput
+          label="PC IPアドレス"
           type="text" 
-          value={form.pcIpAddress} 
-          onChange={(e) => setForm({...form, pcIpAddress: e.target.value})} 
+          value={form.pcIpAddress}
+          onChange={(e) => setForm({...form, pcIpAddress: e.target.value})}
         />
       </div>
 
