@@ -4,6 +4,7 @@ import { toPng } from "html-to-image";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { showError } from "../utils/error";
+import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 
 function QrCodePage() {
 
@@ -33,7 +34,7 @@ function QrCodePage() {
   };
 
   if(!pcNumber){
-    return <>PC番号がありません。<button onClick={() => navigate(`/qr-scan`)}>戻る</button></>;
+    return <>PC番号がありません。<SecondaryButton onClick={() => navigate(`/qr-scan`)}>戻る</SecondaryButton></>;
   }
 
   return (
@@ -64,23 +65,23 @@ function QrCodePage() {
       </div>
 
       <div>
-        <button onClick={handleDownload}>
+        <PrimaryButton onClick={handleDownload}>
           PNG保存
-        </button>
+        </PrimaryButton>
 
-        <button onClick={handlePrint}>
+        <PrimaryButton onClick={handlePrint}>
           印刷
-        </button>
+        </PrimaryButton>
       </div>
 
       <div>
-        <button onClick={() => navigate(`/qr-scan`)}>
+        <SecondaryButton onClick={() => navigate(`/qr-scan`)}>
           QRスキャンに戻る
-        </button>
+        </SecondaryButton>
 
-        <button onClick={() => navigate(`/pc-detail/${pcNumber}`)}>
+        <SecondaryButton onClick={() => navigate(`/pc-detail/${pcNumber}`)}>
           PC詳細に戻る
-        </button>
+        </SecondaryButton>
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import type { RegisterPcRequest } from "../types/api/pcRegisterDto";
 import SearchSelect from "../components/SearchSelect";
 import { CURRENT_USER } from "../constants/auth";
 import { showError } from "../utils/error";
+import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 
 function PcRegisterPage() {
   const navigate = useNavigate();
@@ -250,13 +251,13 @@ function PcRegisterPage() {
       </div>
 
       <div>
-        <button disabled={isSubmitting} onClick={handleRegister}>
+        <PrimaryButton disabled={isSubmitting} onClick={handleRegister}>
           { isSubmitting ? "登録中..." : "登録" }
-        </button>
+        </PrimaryButton>
 
-        <button disabled={isSubmitting} onClick={() => navigate("/pc-list")}>
+        <SecondaryButton disabled={isSubmitting} onClick={() => navigate("/pc-list")}>
           戻る
-        </button>
+        </SecondaryButton>
       </div>
     </>
   );

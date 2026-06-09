@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { showError } from "../utils/error";
+import { SecondaryButton } from "../components/common/Button";
 
 function QrScanPage() {
 
@@ -87,11 +88,11 @@ function QrScanPage() {
 
       <div id="qr-reader" />
 
-      <button
+      <SecondaryButton
         onClick={() => navigate("/")}
       >
         戻る
-      </button>
+      </SecondaryButton>
 
     </div>
 

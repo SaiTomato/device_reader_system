@@ -4,6 +4,7 @@ import { usePcList } from "../services/pcService";
 import type { PcListFilters } from "../types/api/pcListDto";
 import PcCard from "../components/PcCard";
 import PcListFilter from "../components/PcListFilter"; // 👈 1. 引入新组件
+import { DangerButton, PrimaryButton, SecondaryButton } from "../components/common/Button";
 
 function PcListPage() {
   const navigate = useNavigate();
@@ -35,6 +36,30 @@ function PcListPage() {
     error
   } = usePcList(cleanSearchFilters);
 
+  const PAGE_SIZE = 4;
+
+  const [
+    currentPage,
+    setCurrentPage
+  ] = useState(1);
+
+  const totalPages =
+  Math.ceil(
+    (pcList?.length ?? 0)
+    / PAGE_SIZE
+  );
+
+  const pagedData =
+    pcList?.slice(
+
+      (currentPage - 1)
+      * PAGE_SIZE,
+
+      currentPage
+      * PAGE_SIZE
+
+    ) ?? [];
+
   return (
     <>
 
@@ -49,37 +74,35 @@ function PcListPage() {
 
       <div className="flex gap-2 mt-4">
 
-        <button
+        <SecondaryButton
           onClick={() => navigate(`/`)}
         >
           ホームに戻る
-        </button>
-        <button
+        </SecondaryButton>
+        <DangerButton
           onClick={() => {
-
             setFilters(emptyFilters);
             setSearchFilters(emptyFilters);
-
+            setCurrentPage(1);
           }}
         >
           フィルタクリア
-        </button>
+        </DangerButton>
 
-        <button
+        <PrimaryButton
           onClick={() => {
-
             setSearchFilters(filters);
-
+            setCurrentPage(1);
           }}
         >
           検索
-        </button>
+        </PrimaryButton>
 
-        <button
+        <PrimaryButton
           onClick={() => navigate(`/pc-register`)}
         >
           新規登録
-        </button>
+        </PrimaryButton>
 
       </div>
 
@@ -114,8 +137,11 @@ function PcListPage() {
       (pcList?.length ?? 0) > 0 && (
 
         <div className="grid gap-4">
+          <div>
+            結果総数：{pcList?.length ?? 0}
+          </div>
 
-          {pcList?.map((pc) => (
+          {pagedData?.map((pc) => (
 
             <PcCard
               key={pc.pcNumber}
@@ -128,11 +154,42 @@ function PcListPage() {
                 )
               }
             />
-
           ))}
 
-        </div>
+          <div>
+            <button
+              disabled={
+                currentPage === 1
+              }
+              onClick={() => {
+                setCurrentPage(
+                  currentPage - 1
+                );
+              }}
+            >
+              前へ
+            </button>
 
+            <span>
+              {currentPage}
+              /
+              {totalPages}
+            </span>
+
+            <button
+              disabled={
+                currentPage === totalPages
+              }
+              onClick={() => {
+                setCurrentPage(
+                  currentPage + 1
+                );
+              }}
+            >
+              次へ
+            </button>
+          </div>
+        </div>
       )}
 
     </>

@@ -1,4 +1,5 @@
 import type { PcHistory } from "../types/entity/history";
+import BaseModal from "./common/BaseModal";
 
 type Props = {
 
@@ -15,41 +16,12 @@ function HistoryDetailModal({
 
   return (
 
-    <div
-      className="
-        fixed
-        inset-0
-        bg-black/50
-        flex
-        items-center
-        justify-center
-        z-50
-      "
-      onClick={onClose}
+    <BaseModal
+      title="履歴詳細"
+      onClose={onClose}
     >
 
-      <div
-        className="
-          bg-white
-          p-6
-          rounded
-          w-150
-          max-w-[90vw]
-        "
-        onClick={(e) => e.stopPropagation()}
-      >
-
-        <h2
-          className="
-            text-xl
-            font-bold
-            mb-4
-          "
-        >
-          履歴詳細
-        </h2>
-
-        <div>
+      <div>
 
           <p>
             履歴ID：
@@ -118,9 +90,7 @@ function HistoryDetailModal({
 
         </div>
 
-      </div>
-
-    </div>
+    </BaseModal>
 
   );
 

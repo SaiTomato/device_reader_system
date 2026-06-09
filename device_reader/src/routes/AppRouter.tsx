@@ -46,32 +46,32 @@ function AppRouter() {
 
         <Route
           path="/update-complete"
-          element={<UpdateCompletePage />}
+          element={<MainLayout><UpdateCompletePage /></MainLayout>}
         />
 
         <Route
           path="/loan-document/:pcNumber"
-          element={<LoanDocumentPage />}
+          element={<MainLayout><LoanDocumentPage /></MainLayout>}
         />
 
         <Route
           path="/qr-scan"
-          element={<QrScanPage />}
+          element={<MainLayout><QrScanPage /></MainLayout>}
         />
 
         <Route
           path="/qr-code/:pcNumber"
-          element={<QrCodePage />}
+          element={<MainLayout><QrCodePage /></MainLayout>}
         />
 
         <Route
           path="/history"
-          element={<HistoryPage />}
+          element={<MainLayout><HistoryPage /></MainLayout>}
         />
 
         <Route
           path="/pc-register"
-          element={<PcRegisterPage />}
+          element={<MainLayout><PcRegisterPage /></MainLayout>}
         />
 
       </Routes>

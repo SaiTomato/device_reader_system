@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { updatePcInfo } from "../services/pcService";
 import { useReactToPrint } from "react-to-print";
 import { showError } from "../utils/error";
+import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 
 
 function LoanDocumentPage() {
@@ -50,11 +51,11 @@ function LoanDocumentPage() {
           貸出書を表示できません。
         </div>
 
-        <button
+        <SecondaryButton
             onClick={() => { navigate(`/pc-list`) }}
           >
             PC一覧に戻る
-        </button>
+        </SecondaryButton>
       </>
     );
   }
@@ -112,24 +113,24 @@ function LoanDocumentPage() {
       </div>
 
       <div>
-        <button
+        <SecondaryButton
           onClick={() => { navigate(`/pc-edit/${pcNumber}`) }}
           disabled={printed || isSubmitting}
         >
           戻る
-        </button>
-        <button
+        </SecondaryButton>
+        <PrimaryButton
           disabled={isSubmitting}
           onClick={handlePrint}
         >
           印刷
-        </button>
-        <button
+        </PrimaryButton>
+        <SecondaryButton
           disabled={!printed || isSubmitting}
           onClick={handleComplete}
         >
           完了
-        </button>
+        </SecondaryButton>
       </div>
     </>
 

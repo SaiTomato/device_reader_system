@@ -6,6 +6,7 @@ import HistoryCard from "../components/HistoryCard";
 import { usePcListFilterOptions } from "../services/masterService";
 import SearchSelect from "../components/SearchSelect";
 import HistoryDetailModal from"../components/HistoryDetailModal";
+import { DangerButton, PrimaryButton, SecondaryButton } from "../components/common/Button";
 
 interface HistorySearchForm {
 
@@ -84,6 +85,8 @@ function HistoryPage() {
 
     setSearchCondition(initial);
 
+    setCurrentPage(1);
+
   };
 
   const handleCardClick =
@@ -98,6 +101,30 @@ function HistoryPage() {
   };
 
   const histories = data?.items ?? [];
+
+  const PAGE_SIZE = 4;
+
+  const [
+    currentPage,
+    setCurrentPage
+  ] = useState(1);
+
+  const totalPages =
+  Math.ceil(
+    (histories?.length ?? 0)
+    / PAGE_SIZE
+  );
+
+  const pagedData =
+    histories?.slice(
+
+      (currentPage - 1)
+      * PAGE_SIZE,
+
+      currentPage
+      * PAGE_SIZE
+
+    ) ?? [];
     
   return (
     <>
@@ -198,23 +225,24 @@ function HistoryPage() {
       </div>
 
       <div>
-        <button onClick={() => navigate(`/`)}>
+        <SecondaryButton onClick={() => navigate(`/`)}>
           戻る
-        </button>
+        </SecondaryButton>
 
-        <button
+        <PrimaryButton
           onClick={() => {
             setSearchCondition(
               searchForm
             );
+            setCurrentPage(1);
           }}
         >
           検索
-        </button>
+        </PrimaryButton>
 
-        <button onClick={handleReset}>
+        <DangerButton onClick={handleReset}>
           フィルタクリア
-        </button>
+        </DangerButton>
       </div>
 
       {isLoading && (
@@ -243,28 +271,61 @@ function HistoryPage() {
 
       )}
 
-      {
-        histories.map(history => (
+      <div className="grid gap-4">
+        <div>
+          結果総数：{histories?.length ?? 0}
+        </div>
 
-          <HistoryCard
+        {
+          pagedData.map(history => (
+            <HistoryCard
+              key={
+                history.historyId
+              }
+              history={history}
+              onClick={
+                handleCardClick
+              }
+            />
+          ))
+        }
 
-            key={
-              history.historyId
+        <div>
+          <button
+            disabled={
+              currentPage === 1
             }
+            onClick={() => {
+              setCurrentPage(
+                currentPage - 1
+              );
+            }}
+          >
+            前へ
+          </button>
 
-            history={history}
+          <span>
+            {currentPage}
+            /
+            {totalPages}
+          </span>
 
-            onClick={
-              handleCardClick
+          <button
+            disabled={
+              currentPage === totalPages
             }
+            onClick={() => {
+              setCurrentPage(
+                currentPage + 1
+              );
+            }}
+          >
+            次へ
+          </button>
+        </div>
 
-          />
-
-        ))
-      }
-
-      {
-        selectedHistory && (
+        {
+          selectedHistory && (
             <HistoryDetailModal
               history={
                 selectedHistory
@@ -276,8 +337,9 @@ function HistoryPage() {
                 );
               }}
             />
-        )
-      }
+          )
+        }
+      </div>
     </>
   );
 }

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { SecondaryButton } from "../components/common/Button";
 
 function UpdateCompletePage() {
   const navigate = useNavigate();
@@ -12,11 +13,11 @@ function UpdateCompletePage() {
       </h1>
 
       <div>
-        <button
+        <SecondaryButton
           onClick={() => navigate("/")}
         >
           ホーム
-        </button>
+        </SecondaryButton>
       </div>
     </>
 

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { usePcDetail } from "../services/pcService";
 
 import { useNavigate } from "react-router-dom";
+import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 
 function PcDetailPage() {
   // 从路由获取 pcNumber
@@ -78,29 +79,29 @@ function PcDetailPage() {
       </div>
 
       <div>
-        <button
+        <SecondaryButton
           onClick={() => { navigate(`/pc-list`) }}
         >
           PC一覧に戻る
-        </button>
+        </SecondaryButton>
 
-        <button
+        <SecondaryButton
           onClick={() => { navigate(`/qr-scan`) }}
         >
           QRスキャンに戻る
-        </button>
+        </SecondaryButton>
 
-        <button
+        <PrimaryButton
           onClick={() => { navigate(`/pc-edit/${pcDetail?.pcNumber}`) }}
         >
           編集
-        </button>
+        </PrimaryButton>
 
-        <button
+        <SecondaryButton
           onClick={() => { navigate(`/qr-code/${pcDetail?.pcNumber}`) }}
         >
           QR表示
-        </button>
+        </SecondaryButton>
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import SearchSelect from '../components/SearchSelect';
 import { useNavigate } from "react-router-dom";
 import { CURRENT_USER } from "../constants/auth";
 import { showError } from '../utils/error';
+import { PrimaryButton, SecondaryButton } from '../components/common/Button';
 
 
 function PcEditPage() {
@@ -254,18 +255,18 @@ function PcEditPage() {
             </div>
 
             <div>
-                <button
+                <SecondaryButton
                     disabled={isSubmitting}
                     onClick={() => { navigate(`/pc-detail/${pcDetail?.pcNumber}`) }}
                 >
                     戻る
-                </button>
-                <button
+                </SecondaryButton>
+                <PrimaryButton
                     disabled={isSubmitting}
                     onClick={handleUpdate}
                 >
                     { isSubmitting ? "更新中..." : "更新" }
-                </button>
+                </PrimaryButton>
             </div>
         </>
     );
