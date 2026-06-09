@@ -47,9 +47,6 @@ function QrScanPage() {
 
         } catch(err) {
 
-          console.error(
-            err
-          );
           showError(err);
 
         }

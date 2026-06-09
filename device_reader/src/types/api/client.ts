@@ -19,7 +19,7 @@ export async function requestGas<T>(action: string, payload?: any): Promise<T> {
 
   // 2. 统一校验 HTTP 状态码
   if (!response.ok) {
-    throw new Error(`HTTP 错误！状态码: ${response.status}`);
+    throw new Error(`HTTP Error! Status: ${response.status}`);
   }
 
   // 3. 统一校验 GAS 返回的自定义 ApiResponse 结构
@@ -29,6 +29,6 @@ export async function requestGas<T>(action: string, payload?: any): Promise<T> {
     return result.data; // 直接返回业务需要的核心数据 T
   } else {
     // 如果 GAS 返回 error，直接抛出，React Query 会自动捕获并存入 error.message
-    throw new Error(result.message || `操作 [${action}] 失败`);
+    throw new Error(result.message || `操作 [${action}] 失敗`);
   }
 }

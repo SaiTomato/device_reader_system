@@ -5,6 +5,7 @@ import type { PcHistory } from "../types/entity/history";
 import HistoryCard from "../components/HistoryCard";
 import { usePcListFilterOptions } from "../services/masterService";
 import SearchSelect from "../components/SearchSelect";
+import HistoryDetailModal from"../components/HistoryDetailModal";
 
 interface HistorySearchForm {
 
@@ -97,8 +98,6 @@ function HistoryPage() {
   };
 
   const histories = data?.items ?? [];
-
-  console.log(histories);
     
   return (
     <>
@@ -239,7 +238,7 @@ function HistoryPage() {
       (histories.length ?? 0) === 0 && (
 
         <div>
-          没有符合条件的数据
+          条件に合うデータはございません。
         </div>
 
       )}
@@ -262,6 +261,22 @@ function HistoryPage() {
           />
 
         ))
+      }
+
+      {
+        selectedHistory && (
+            <HistoryDetailModal
+              history={
+                selectedHistory
+              }
+
+              onClose={() => {
+                setSelectedHistory(
+                  null
+                );
+              }}
+            />
+        )
       }
     </>
   );

@@ -31,6 +31,8 @@ function PcEditPage() {
 
     const [originalPcName, setOriginalPcName] = useState("");
 
+    const [ isSubmitting, setIsSubmitting ] = useState(false);
+
     useEffect(() => {
 
         if(!pcDetail) return;
@@ -78,6 +80,7 @@ function PcEditPage() {
             return;
         }
         try {
+            setIsSubmitting(true);
             const result = await updatePcInfo(form);
 
             if(result.updated){
@@ -86,6 +89,8 @@ function PcEditPage() {
             
         } catch (error) {
             showError(error)
+        }finally{
+            setIsSubmitting(false);
         }
     };
 
@@ -250,14 +255,16 @@ function PcEditPage() {
 
             <div>
                 <button
+                    disabled={isSubmitting}
                     onClick={() => { navigate(`/pc-detail/${pcDetail?.pcNumber}`) }}
                 >
                     戻る
                 </button>
                 <button
+                    disabled={isSubmitting}
                     onClick={handleUpdate}
                 >
-                    更新
+                    { isSubmitting ? "更新中..." : "更新" }
                 </button>
             </div>
         </>

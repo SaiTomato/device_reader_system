@@ -5,6 +5,7 @@ import { registerPc } from "../services/pcService";
 import type { RegisterPcRequest } from "../types/api/pcRegisterDto";
 import SearchSelect from "../components/SearchSelect";
 import { CURRENT_USER } from "../constants/auth";
+import { showError } from "../utils/error";
 
 function PcRegisterPage() {
   const navigate = useNavigate();
@@ -31,6 +32,8 @@ function PcRegisterPage() {
     updatedBy: CURRENT_USER.email
   });
 
+  const [ isSubmitting, setIsSubmitting ] = useState(false);
+
   const { data: options } = usePcListFilterOptions();
 
   const handleRegister = async () => {
@@ -40,12 +43,20 @@ function PcRegisterPage() {
       alert("全項目を入力してください");
       return;
     }
-    const result = await registerPc(form);
+    try {
 
-    if(result.registered){
-      navigate(
-        `/qr-code/${result.pcNumber}`
-      );
+      setIsSubmitting(true);
+      const result = await registerPc(form);
+
+      if(result.registered){
+        navigate(
+          `/qr-code/${result.pcNumber}`
+        );
+      }
+    } catch (error) {
+      showError(error);
+    }finally{
+      setIsSubmitting(false);
     }
   };
 
@@ -239,11 +250,11 @@ function PcRegisterPage() {
       </div>
 
       <div>
-        <button onClick={handleRegister}>
-          登録
+        <button disabled={isSubmitting} onClick={handleRegister}>
+          { isSubmitting ? "登録中..." : "登録" }
         </button>
 
-        <button onClick={() => navigate("/pc-list")}>
+        <button disabled={isSubmitting} onClick={() => navigate("/pc-list")}>
           戻る
         </button>
       </div>

@@ -14,10 +14,12 @@ function LoanDocumentPage() {
   const updateData = location.state?.updateData;
   const originalPcName = location.state?.originalPcName;
   const [printed, setPrinted] = useState(false);
+  const [ isSubmitting, setIsSubmitting ] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
   const handleComplete = async () => {
     try {
+      setIsSubmitting(true);
       const result =
         await updatePcInfo(
           updateData
@@ -29,6 +31,8 @@ function LoanDocumentPage() {
       }
     } catch (error) {
       showError(error)
+    }finally{
+      setIsSubmitting(false);
     }
   };
 
@@ -110,17 +114,18 @@ function LoanDocumentPage() {
       <div>
         <button
           onClick={() => { navigate(`/pc-edit/${pcNumber}`) }}
-          disabled={printed}
+          disabled={printed || isSubmitting}
         >
           戻る
         </button>
         <button
+          disabled={isSubmitting}
           onClick={handlePrint}
         >
           印刷
         </button>
         <button
-          disabled={!printed}
+          disabled={!printed || isSubmitting}
           onClick={handleComplete}
         >
           完了
