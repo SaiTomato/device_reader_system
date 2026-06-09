@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { showError } from "../utils/error";
 import { SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 function QrScanPage() {
 
@@ -78,9 +79,7 @@ function QrScanPage() {
 
     <div className="p-6">
 
-      <h1 className="text-2xl font-bold mb-4">
-        QR Scan
-      </h1>
+      <PageHeader title="QRスキャン"/>
 
       <p className="mb-4">
         PCのQRコードを読み取ってください

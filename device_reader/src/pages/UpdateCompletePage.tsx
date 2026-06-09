@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 function UpdateCompletePage() {
   const navigate = useNavigate();
@@ -7,10 +8,7 @@ function UpdateCompletePage() {
   return (
 
     <>
-
-      <h1>
-        更新完了
-      </h1>
+      <PageHeader title="更新完了"/>
 
       <div>
         <SecondaryButton

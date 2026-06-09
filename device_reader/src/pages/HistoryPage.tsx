@@ -7,6 +7,7 @@ import { usePcListFilterOptions } from "../services/masterService";
 import SearchSelect from "../components/SearchSelect";
 import HistoryDetailModal from"../components/HistoryDetailModal";
 import { DangerButton, PrimaryButton, SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 interface HistorySearchForm {
 
@@ -128,9 +129,7 @@ function HistoryPage() {
     
   return (
     <>
-      <div>
-        履歴
-      </div>
+      <PageHeader title="履歴"/>
 
       <div className="mb-4">
 

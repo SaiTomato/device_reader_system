@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { CURRENT_USER } from "../constants/auth";
 import { showError } from '../utils/error';
 import { PrimaryButton, SecondaryButton } from '../components/common/Button';
+import PageHeader from '../components/common/PageHeader';
 
 
 function PcEditPage() {
@@ -105,9 +106,7 @@ function PcEditPage() {
     return (
 
         <>
-            <h1>
-                PC編集
-            </h1>
+            <PageHeader title="PC編集"/>
 
             <div>
                 <h2>

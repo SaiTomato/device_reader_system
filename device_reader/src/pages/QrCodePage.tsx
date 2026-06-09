@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 function QrCodePage() {
 
@@ -39,7 +40,7 @@ function QrCodePage() {
 
   return (
     <>
-      <h1>QR表示</h1>
+      <PageHeader title="QR表示"/>
 
       <div ref={printRef}
         style={{

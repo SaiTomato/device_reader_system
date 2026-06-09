@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import PageHeader from "../components/common/PageHeader";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -11,9 +12,7 @@ function HomePage() {
 
           <div>
 
-            <h4 className="text-xl font-semibold">
-              PC管理システム
-            </h4>
+            <PageHeader title="ホーム"/>
 
             <p
               id="homeUserName"

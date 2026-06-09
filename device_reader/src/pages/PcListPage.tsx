@@ -5,6 +5,7 @@ import type { PcListFilters } from "../types/api/pcListDto";
 import PcCard from "../components/PcCard";
 import PcListFilter from "../components/PcListFilter"; // 👈 1. 引入新组件
 import { DangerButton, PrimaryButton, SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 function PcListPage() {
   const navigate = useNavigate();
@@ -62,10 +63,7 @@ function PcListPage() {
 
   return (
     <>
-
-      <h1>
-        PC一覧
-      </h1>
+      <PageHeader title="PC一覧"/>
 
       <PcListFilter
         filters={filters}

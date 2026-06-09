@@ -4,6 +4,7 @@ import { updatePcInfo } from "../services/pcService";
 import { useReactToPrint } from "react-to-print";
 import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 
 function LoanDocumentPage() {
@@ -70,10 +71,7 @@ function LoanDocumentPage() {
         p-8
         bg-white
       ">
-        <h1>
-          貸出書
-        </h1>
-
+        <PageHeader title="貸出書"/>
 
         <div>
           <p>借用者名前 : {updateData?.employeeCurrent}</p>

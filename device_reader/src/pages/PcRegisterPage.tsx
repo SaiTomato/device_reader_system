@@ -7,6 +7,7 @@ import SearchSelect from "../components/SearchSelect";
 import { CURRENT_USER } from "../constants/auth";
 import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 function PcRegisterPage() {
   const navigate = useNavigate();
@@ -63,9 +64,7 @@ function PcRegisterPage() {
 
   return (
     <>
-      <div>
-        PC新規登録
-      </div>
+      <PageHeader title="PC新規登録"/>
 
       <div>
         <label>PC番号:</label>

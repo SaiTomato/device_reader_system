@@ -4,6 +4,7 @@ import { usePcDetail } from "../services/pcService";
 
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
+import PageHeader from "../components/common/PageHeader";
 
 function PcDetailPage() {
   // 从路由获取 pcNumber
@@ -28,9 +29,7 @@ function PcDetailPage() {
   return (
     <>
       <div>
-        <h1>
-          PC詳細
-        </h1>
+        <PageHeader title="PC詳細"/>
 
         <p>
           PC番号:
