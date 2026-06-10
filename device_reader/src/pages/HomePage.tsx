@@ -1,8 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/common/PageHeader";
+import { useAuth } from "../hooks/useAuth";
 
 function HomePage() {
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
+
+  const handleLogout = () => {
+    // TODO: logout logic, clear user data
+    setUser(null);
+
+    navigate(`/`)
+    
+  };
 
   return (
 
@@ -23,14 +33,16 @@ function HomePage() {
 
           <button
             className="px-3 py-1 border border-red-500 text-red-600 rounded hover:bg-red-50"
-            onClick={() => {
-              // 这里可以添加注销逻辑，例如清除用户信息、重置状态等
-              console.log("Logout clicked");
-            }}
+            onClick={handleLogout}
           >
             Logout
           </button>
 
+        </div>
+
+        <div>
+          ユーザー名：
+          {user?.employeeName}
         </div>
 
         <div className="grid gap-3">
@@ -49,12 +61,19 @@ function HomePage() {
             PC一覧
           </button>
 
-          <button
-            className="bg-gray-500 text-white py-3 rounded-lg text-lg"
-            onClick={() => { navigate(`/history`) }}
-          >
-            履歴
-          </button>
+          {
+            user?.role === "admin"
+            &&
+            (
+              <button
+                className="bg-gray-500 text-white py-3 rounded-lg text-lg"
+                onClick={() => { navigate(`/history`) }}
+              >
+                履歴
+              </button>
+            )
+          }
+          
 
         </div>
 

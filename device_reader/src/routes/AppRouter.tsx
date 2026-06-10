@@ -18,60 +18,124 @@ import QrScanPage from "../pages/QrScanPage";
 import QrCodePage from "../pages/QrCodePage";
 import HistoryPage from "../pages/HistoryPage";
 import PcRegisterPage from "../pages/PcRegisterPage";
+import ScrollToTop from "../components/common/ScrollToTop";
+import LoginPage from "../pages/LoginPage";
+import { AdminRoute, GuestRoute, UserRoute } from "./AuthRoute";
 
 function AppRouter() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route
           path="/"
-          element={<MainLayout><HomePage /></MainLayout>}
+          element={
+          <GuestRoute>
+            <MainLayout>
+              <LoginPage />
+            </MainLayout>
+          </GuestRoute>}
+        />
+
+        <Route
+          path="/home"
+          element={
+          <UserRoute>
+            <MainLayout>
+              <HomePage />
+            </MainLayout>
+          </UserRoute>}
         />
 
         <Route
           path="/pc-list"
-          element={<MainLayout><PcListPage /></MainLayout>}
+          element={
+          <AdminRoute>
+            <MainLayout>
+              <PcListPage />
+            </MainLayout>
+          </AdminRoute>}
         />
 
         <Route
           path="/pc-detail/:pcNumber"
-          element={<MainLayout><PcDetailPage /></MainLayout>}
+          element={
+          <UserRoute>
+            <MainLayout>
+              <PcDetailPage />
+            </MainLayout>
+          </UserRoute>}
         />
 
         <Route
           path="/pc-edit/:pcNumber"
-          element={<MainLayout><PcEditPage /></MainLayout>}
+          element={
+          <AdminRoute>
+            <MainLayout>
+              <PcEditPage />
+            </MainLayout>
+          </AdminRoute>}
         />
 
         <Route
           path="/update-complete"
-          element={<MainLayout><UpdateCompletePage /></MainLayout>}
+          element={
+          <AdminRoute>
+            <MainLayout>
+              <UpdateCompletePage />
+            </MainLayout>
+          </AdminRoute>}
         />
 
         <Route
           path="/loan-document/:pcNumber"
-          element={<MainLayout><LoanDocumentPage /></MainLayout>}
+          element={
+          <AdminRoute>
+            <MainLayout>
+              <LoanDocumentPage />
+            </MainLayout>
+          </AdminRoute>}
         />
 
         <Route
           path="/qr-scan"
-          element={<MainLayout><QrScanPage /></MainLayout>}
+          element={
+          <UserRoute>
+            <MainLayout>
+              <QrScanPage />
+            </MainLayout>
+          </UserRoute>}
         />
 
         <Route
           path="/qr-code/:pcNumber"
-          element={<MainLayout><QrCodePage /></MainLayout>}
+          element={
+          <UserRoute>
+            <MainLayout>
+              <QrCodePage />
+            </MainLayout>
+          </UserRoute>}
         />
 
         <Route
           path="/history"
-          element={<MainLayout><HistoryPage /></MainLayout>}
+          element={
+          <AdminRoute>
+            <MainLayout>
+              <HistoryPage />
+            </MainLayout>
+          </AdminRoute>}
         />
 
         <Route
           path="/pc-register"
-          element={<MainLayout><PcRegisterPage /></MainLayout>}
+          element={
+          <AdminRoute>
+            <MainLayout>
+              <PcRegisterPage />
+            </MainLayout>
+          </AdminRoute>}
         />
 
       </Routes>

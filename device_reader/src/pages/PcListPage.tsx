@@ -73,7 +73,7 @@ function PcListPage() {
       <div className="flex gap-2 mt-4">
 
         <SecondaryButton
-          onClick={() => navigate(`/`)}
+          onClick={() => navigate(`/home`)}
         >
           ホームに戻る
         </SecondaryButton>

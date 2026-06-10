@@ -88,7 +88,7 @@ function QrScanPage() {
       <div id="qr-reader" />
 
       <SecondaryButton
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/home")}
       >
         戻る
       </SecondaryButton>

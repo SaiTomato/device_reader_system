@@ -12,7 +12,7 @@ function UpdateCompletePage() {
 
       <div>
         <SecondaryButton
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         >
           ホーム
         </SecondaryButton>
