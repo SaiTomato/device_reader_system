@@ -3,39 +3,40 @@ import PageHeader from "../components/common/PageHeader";
 import { useAuth } from "../hooks/useAuth";
 import { getEmployeeByEmail } from "../services/employeeService";
 import { showError } from "../utils/error";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { useState } from "react";
+
+type GoogleJwtPayload = {
+
+  email: string;
+
+  name: string;
+
+  picture?: string;
+
+};
 
 function LoginPage() {
     const navigate = useNavigate();
     const { setUser } = useAuth();
+    const [loading,setLoading] = useState(false);
 
-    const handleAdminLogin = () => {
-        setUser({
-            email:"admin@gmail.com",
-            employeeName:"ADMIN",
-            role:"admin",
-            enabled:true
-        });
-        navigate("/home");
-    };
-
-    const handleUserLogin = () => {
-        setUser({
-            email:"user@gmail.com",
-            employeeName:"USER",
-            role:"user",
-            enabled:true
-        });
-        navigate("/home");
-    };
-
-    const handleLogin = async () => {
+    const handleLogin = async (credentialResponse: CredentialResponse) => {
+        if (!credentialResponse.credential) {
+            showError(new Error("ログイン認証未取得"));
+            return;
+        }
+        setLoading(true);
         try {
-            const result = await getEmployeeByEmail({email:"tomato.202504.tsoimk@gmail.com"});
+            const decoded = jwtDecode<GoogleJwtPayload>(credentialResponse.credential!);
+            const result = await getEmployeeByEmail({email:decoded.email});
             setUser(result);
-            console.log(result)
             navigate("/home");
         } catch (error) {
             showError(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -50,27 +51,21 @@ function LoginPage() {
             </div>
 
             <div className="grid gap-3">
-
-                <button
-                    onClick={handleLogin}
-                >
-                    Login
-                </button>
-
-                <button
-                    className="bg-blue-600 text-white py-3 rounded-lg text-lg"
-                    onClick={handleAdminLogin}
-                >
-                    Fake Admin Login
-                </button>
-
-                <button
-                    className="bg-blue-600 text-white py-3 rounded-lg text-lg"
-                    onClick={handleUserLogin}
-                >
-                    Fake User Login
-                </button>
-
+                {loading
+                ? (
+                    <div>
+                    ログイン中...
+                    </div>
+                )
+                : (
+                    <GoogleLogin
+                        onSuccess={handleLogin}
+                        onError={() => {
+                            console.log("Login Failed");
+                            showError(new Error("Googleログイン失敗しました"));
+                        }}
+                    />
+                )}
             </div>
 
         </div>

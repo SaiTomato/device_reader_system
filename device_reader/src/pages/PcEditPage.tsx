@@ -33,7 +33,7 @@ function PcEditPage() {
         updatedBy: ""
     });
 
-    const [originalPcName, setOriginalPcName] = useState("");
+    const [ originalPcName, setOriginalPcName ] = useState("");
 
     const [ isSubmitting, setIsSubmitting ] = useState(false);
 
@@ -68,6 +68,7 @@ function PcEditPage() {
         setOriginalPcName(
             pcDetail.pcName
         );
+
     }, [pcDetail]);
 
     const handleUpdate = async () => {
@@ -95,6 +96,13 @@ function PcEditPage() {
             showError(error)
         }finally{
             setIsSubmitting(false);
+        }
+    };
+
+    const handleBack = () => {
+        const hasConfirmed = window.confirm("入力を破棄しますか？");
+        if (hasConfirmed) {
+            navigate(-1);
         }
     };
 
@@ -231,7 +239,7 @@ function PcEditPage() {
             <div>
                 <SecondaryButton
                     disabled={isSubmitting}
-                    onClick={() => { navigate(`/pc-detail/${pcDetail?.pcNumber}`) }}
+                    onClick={handleBack}
                 >
                     戻る
                 </SecondaryButton>

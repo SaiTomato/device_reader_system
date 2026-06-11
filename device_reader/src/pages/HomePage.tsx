@@ -7,7 +7,7 @@ function HomePage() {
   const { user, setUser } = useAuth();
 
   const handleLogout = () => {
-    // TODO: logout logic, clear user data
+
     setUser(null);
 
     navigate(`/`)

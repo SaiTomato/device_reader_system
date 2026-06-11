@@ -63,6 +63,13 @@ function PcRegisterPage() {
     }
   };
 
+  const handleBack = () => {
+    const hasConfirmed = window.confirm("入力を破棄しますか？");
+    if (hasConfirmed) {
+      navigate(-1);
+    }
+  };
+
   return (
     <>
       <PageHeader title="PC新規登録"/>
@@ -255,7 +262,7 @@ function PcRegisterPage() {
           { isSubmitting ? "登録中..." : "登録" }
         </PrimaryButton>
 
-        <SecondaryButton disabled={isSubmitting} onClick={() => navigate("/pc-list")}>
+        <SecondaryButton disabled={isSubmitting} onClick={handleBack}>
           戻る
         </SecondaryButton>
       </div>
