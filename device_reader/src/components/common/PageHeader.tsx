@@ -17,16 +17,11 @@ function PageHeader({
   return (
 
     <div
-      className="
-        mb-6
-      "
+      className="mb-8 sm:mb-10"
     >
 
       <h1
-        className="
-          text-2xl
-          font-bold
-        "
+        className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight"
       >
         {title}
       </h1>
@@ -35,10 +30,7 @@ function PageHeader({
         subtitle && (
 
           <p
-            className="
-              text-gray-500
-              mt-1
-            "
+            className="text-base sm:text-lg text-gray-600 mt-2"
           >
             {subtitle}
           </p>

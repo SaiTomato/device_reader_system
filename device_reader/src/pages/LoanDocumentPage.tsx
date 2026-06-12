@@ -47,17 +47,17 @@ function LoanDocumentPage() {
 
   if(!updateData){
     return (
-      <>
-        <div>
+      <div className="space-y-6">
+        <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-4 rounded-lg font-medium">
           貸出書を表示できません。
         </div>
 
         <SecondaryButton
             onClick={() => { navigate(`/pc-list`) }}
           >
-            PC一覧に戻る
+          PC一覧に戻る
         </SecondaryButton>
-      </>
+      </div>
     );
   }
 
@@ -65,70 +65,84 @@ function LoanDocumentPage() {
 
     <>
       <div ref={printRef}
-        className="
-        max-w-3xl
-        mx-auto
-        p-8
-        bg-white
-      ">
+        className="max-w-4xl mx-auto bg-white rounded-lg p-8 sm:p-10 shadow-sm border border-gray-200 mb-6">
+        
         <PageHeader title="貸出書"/>
 
-        <div>
-          <p>借用者名前 : {updateData?.employeeCurrent}</p>
-        </div>
-        <div>
-          <p>日付 : {new Date().toLocaleDateString()}</p>
+        <div className="space-y-6 text-base sm:text-lg">
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <p className="text-gray-600 font-medium mb-1">借用者名前</p>
+              <p className="text-gray-900 font-semibold">{updateData?.employeeCurrent}</p>
+            </div>
+            <div>
+              <p className="text-gray-600 font-medium mb-1">日付</p>
+              <p className="text-gray-900 font-semibold">{new Date().toLocaleDateString()}</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-gray-200">
+            <div>
+              <p className="text-gray-600 font-medium mb-1">PC番号</p>
+              <p className="text-gray-900 font-semibold">{updateData?.pcNumber}</p>
+            </div>
+            <div>
+              <p className="text-gray-600 font-medium mb-1">品名</p>
+              <p className="text-gray-900 font-semibold">{updateData?.pcName}</p>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-gray-200">
+            <p className="text-gray-600 font-medium mb-2">以前使用した品名</p>
+            <p className="text-gray-900">{originalPcName}</p>
+          </div>
+
+          <div className="pt-4 border-t border-gray-200">
+            <p className="text-gray-600 font-medium mb-2">使用場所</p>
+            <p className="text-gray-900">{updateData?.pcLocation}</p>
+          </div>
+
+          <div className="pt-4 border-t border-gray-200 space-y-3">
+            <p className="text-gray-900">
+              上記の品目をプロジェクト開発用として貸出します。
+            </p>
+
+            <p className="text-gray-900">
+              プロジェクトが終了したら会社に返納します。
+            </p>
+          </div>
+
+          <div className="pt-8 border-t border-gray-200 mt-12">
+            <p className="text-gray-600 font-medium mb-2">署名</p>
+            <div className="border-b border-gray-400 h-12 mt-8"></div>
+          </div>
         </div>
 
-        <div>
-          <p>PC番号 : {updateData?.pcNumber}</p>
-        </div>
-        <div>
-          <p>品名 : {updateData?.pcName}</p>
-        </div>
-        <div>
-          <p>以前使用した品名 : {originalPcName}</p>
-        </div>
-
-        <div>
-          <p>使用場所（例: 自宅/本社/現場）: {updateData?.pcLocation}</p>
-        </div>
-
-        <div>
-          <p>
-            上記の品目をプロジェクト開発用として貸出します。
-          </p>
-
-          <p>
-            プロジェクトが終了したら会社に返納します。
-          </p>
-        </div>
-
-        <div className="mt-24">
-          署名
-          <div className="border-b mt-8"></div>
-        </div>
       </div>
 
-      <div>
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-wrap">
         <SecondaryButton
           onClick={() => { navigate(`/pc-edit/${pcNumber}`) }}
           disabled={printed || isSubmitting}
+          className="sm:flex-1"
         >
           戻る
         </SecondaryButton>
         <PrimaryButton
           disabled={isSubmitting}
           onClick={handlePrint}
+          className="sm:flex-1"
         >
-          印刷
+          🖨️ 印刷
         </PrimaryButton>
-        <SecondaryButton
+        <PrimaryButton
           disabled={!printed || isSubmitting}
           onClick={handleComplete}
+          className="sm:flex-1"
         >
-          完了
-        </SecondaryButton>
+          { isSubmitting ? "処理中..." : "完了" }
+        </PrimaryButton>
       </div>
     </>
 

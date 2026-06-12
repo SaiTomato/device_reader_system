@@ -28,11 +28,13 @@ function BaseModal({
       className="
         fixed
         inset-0
-        bg-black/50
+        bg-black/40
         flex
         items-center
         justify-center
         z-50
+        p-4
+        sm:p-6
       "
       onClick={onClose}
     >
@@ -42,9 +44,14 @@ function BaseModal({
         className="
           bg-white
           p-6
-          rounded
-          w-150
-          max-w-[90vw]
+          sm:p-8
+          rounded-lg
+          w-full
+          max-w-2xl
+          max-h-[90vh]
+          overflow-y-auto
+          shadow-xl
+          border border-gray-200
         "
 
         onClick={(e) =>
@@ -58,14 +65,15 @@ function BaseModal({
             flex
             justify-between
             items-center
-            mb-4
+            mb-6
           "
         >
 
           <h2
             className="
-              text-xl
+              text-2xl
               font-bold
+              text-gray-900
             "
           >
             {title}
@@ -73,6 +81,14 @@ function BaseModal({
 
           <button
             onClick={onClose}
+            className="
+              text-gray-400
+              hover:text-gray-600
+              text-2xl
+              leading-none
+              transition-colors
+              duration-200
+            "
           >
             ✕
           </button>

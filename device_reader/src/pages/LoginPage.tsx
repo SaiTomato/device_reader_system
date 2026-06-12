@@ -42,30 +42,39 @@ function LoginPage() {
 
     return (
 
-        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow">
+        <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-linear-to-br from-blue-50 to-indigo-100">
 
-            <div className="flex justify-between items-center mb-6">
+            <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8 sm:p-10 border border-gray-200">
 
-                <PageHeader title="Login"/>
+                <div className="mb-8">
 
-            </div>
+                    <PageHeader title="ログイン"/>
 
-            <div className="grid gap-3">
-                {loading
-                ? (
-                    <div>
-                    ログイン中...
-                    </div>
-                )
-                : (
-                    <GoogleLogin
-                        onSuccess={handleLogin}
-                        onError={() => {
-                            console.log("Login Failed");
-                            showError(new Error("Googleログイン失敗しました"));
-                        }}
-                    />
-                )}
+                    <p className="text-gray-600 text-center mt-2">Google アカウントでログイン</p>
+
+                </div>
+
+                <div className="flex justify-center">
+                    {loading
+                    ? (
+                        <div className="text-center">
+                            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                            <p className="mt-2 text-gray-600">ログイン中...</p>
+                        </div>
+                    )
+                    : (
+                        <div className="w-full">
+                            <GoogleLogin
+                                onSuccess={handleLogin}
+                                onError={() => {
+                                    console.log("Login Failed");
+                                    showError(new Error("Googleログイン失敗しました"));
+                                }}
+                            />
+                        </div>
+                    )}
+                </div>
+
             </div>
 
         </div>

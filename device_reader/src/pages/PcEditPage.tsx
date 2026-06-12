@@ -107,10 +107,21 @@ function PcEditPage() {
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+          <div className="flex justify-center items-center py-12">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+              <p className="mt-3 text-gray-600 font-medium">読込中...</p>
+            </div>
+          </div>
+        );
     }
     if (error) {
-        return <div>Loading failed: {error.message}</div>;
+        return (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg font-medium">
+            読込失敗: {error.message}
+          </div>
+        );
     }
 
     return (
@@ -118,19 +129,23 @@ function PcEditPage() {
         <>
             <PageHeader title="PC編集"/>
 
-            <div>
-                <h2>
-                    PC番号:
-                    {pcDetail?.pcNumber}
-                </h2>
-
-                <h2>
-                    現在状況:
-                    {pcDetail?.pcStatus}
-                </h2>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 sm:p-6 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <div>
+                  <p className="text-xs sm:text-sm text-gray-600 font-medium mb-1">PC番号</p>
+                  <p className="text-base sm:text-lg font-bold text-gray-900">{pcDetail?.pcNumber}</p>
+                </div>
+                <div>
+                  <p className="text-xs sm:text-sm text-gray-600 font-medium mb-1">現在状況</p>
+                  <p className="text-base sm:text-lg font-bold text-blue-700">{pcDetail?.pcStatus}</p>
+                </div>
+              </div>
             </div>
 
-            <div>
+            <div className="bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-200 mb-6">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                
                 <FormInput
                     label="PC名"
                     type="text"
@@ -139,7 +154,7 @@ function PcEditPage() {
                 />
 
                 <SearchSelect
-                    label="社員名"
+                    label="現使用者"
                     value={form.employeeCurrent}
                     options={
                         options?.employeeName || []
@@ -228,24 +243,31 @@ function PcEditPage() {
                     }}
                 />
 
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-gray-200">
                 <TextareaInput
                     label="備考"
                     value={form.pcRemark}
                     onChange={(e) => setForm({...form, pcRemark: e.target.value})}
                     rows={4}
                 />
+              </div>
+
             </div>
 
-            <div>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-wrap">
                 <SecondaryButton
                     disabled={isSubmitting}
                     onClick={handleBack}
+                    className="sm:flex-1"
                 >
                     戻る
                 </SecondaryButton>
                 <PrimaryButton
                     disabled={isSubmitting}
                     onClick={handleUpdate}
+                    className="sm:flex-1"
                 >
                     { isSubmitting ? "更新中..." : "更新" }
                 </PrimaryButton>

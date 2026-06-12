@@ -77,21 +77,29 @@ function QrScanPage() {
 
   return (
 
-    <div className="p-6">
+    <div className="space-y-6 sm:space-y-8">
 
       <PageHeader title="QRスキャン"/>
 
-      <p className="mb-4">
-        PCのQRコードを読み取ってください
-      </p>
+      <div className="bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-200">
+        <p className="text-gray-700 text-base sm:text-lg mb-6 text-center font-medium">
+          PCのQRコードを読み取ってください
+        </p>
 
-      <div id="qr-reader" />
+        <div 
+          id="qr-reader" 
+          className="flex justify-center bg-gray-50 rounded-lg p-6 min-h-80"
+        />
+      </div>
 
-      <SecondaryButton
-        onClick={() => navigate("/home")}
-      >
-        戻る
-      </SecondaryButton>
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <SecondaryButton
+          onClick={() => navigate("/home")}
+          className="sm:flex-1"
+        >
+          戻る
+        </SecondaryButton>
+      </div>
 
     </div>
 

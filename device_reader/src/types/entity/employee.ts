@@ -1,6 +1,6 @@
 export interface Employee {
 
-    employeeId: number;
+    employeeId: string;
 
     employeeName: string;
 

@@ -6,7 +6,7 @@ export type UpdateType =
 
 export interface PcHistory {
 
-    historyId: number;
+    historyId: string;
 
     pcNumber: string;
 

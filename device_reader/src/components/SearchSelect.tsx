@@ -33,19 +33,15 @@ function SearchSelect({
 }: SearchSelectProps) {
   return (
     <div
-      className="
-        flex
-        flex-col
-        gap-1
-      "
+      className="flex flex-col gap-2"
     >
-      <label
-        className="
-          font-medium
-        "
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          className="font-medium text-gray-700 text-sm"
+        >
+          {label}
+        </label>
+      )}
 
       <Select
 
@@ -78,6 +74,36 @@ function SearchSelect({
           )
 
         }
+        styles={{
+          control: (baseStyles) => ({
+            ...baseStyles,
+            borderColor: '#d1d5db',
+            borderRadius: '0.5rem',
+            padding: '0.375rem',
+            fontSize: '1rem',
+            transition: 'all 0.2s',
+            boxShadow: 'none',
+            '&:hover': {
+              borderColor: '#9ca3af',
+            },
+            '&:focus': {
+              outline: 'none',
+              borderColor: '#3b82f6',
+            }
+          }),
+          option: (baseStyles, state) => ({
+            ...baseStyles,
+            backgroundColor: state.isSelected ? '#3b82f6' : state.isFocused ? '#eff6ff' : undefined,
+            color: state.isSelected ? 'white' : '#1f2937',
+            padding: '0.75rem 1rem',
+            fontSize: '0.95rem',
+            cursor: 'pointer',
+          }),
+          input: (baseStyles) => ({
+            ...baseStyles,
+            fontSize: '0.95rem',
+          })
+        }}
       />
     </div>
   );

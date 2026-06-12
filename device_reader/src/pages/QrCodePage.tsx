@@ -35,54 +35,57 @@ function QrCodePage() {
   };
 
   if(!pcNumber){
-    return <>PC番号がありません。<SecondaryButton onClick={() => navigate(`/qr-scan`)}>戻る</SecondaryButton></>;
+    return (
+      <div className="space-y-4">
+        <p className="text-red-600 font-medium">PC番号がありません。</p>
+        <SecondaryButton onClick={() => navigate(`/qr-scan`)}>戻る</SecondaryButton>
+      </div>
+    );
   }
 
   return (
     <>
       <PageHeader title="QR表示"/>
 
-      <div ref={printRef}
-        style={{
-          backgroundColor: "#fff",
-          padding: "20px",
-          display: "inline-block"
-        }}
-      >
-        <QRCodeSVG
-          value={pcNumber}
-          size={256}
-        />
-        <div
-          style={{
-            fontSize: "24px",
-            fontWeight: "bold",
-            textAlign: "center",
-            marginTop: "12px"
-          }}
+      <div className="flex flex-col items-center space-y-6 sm:space-y-8">
+        
+        <div ref={printRef}
+          className="bg-white rounded-lg p-8 sm:p-10 shadow-lg border border-gray-200 flex flex-col items-center"
         >
-          PC番号: {pcNumber}
+          <QRCodeSVG
+            value={pcNumber}
+            size={256}
+          />
+          <div
+            className="text-2xl sm:text-3xl font-bold text-center text-gray-900 mt-6 mb-2"
+          >
+            PC番号
+          </div>
+          <div className="text-xl sm:text-2xl font-semibold text-blue-600">
+            {pcNumber}
+          </div>
         </div>
-      </div>
 
-      <div>
-        <PrimaryButton onClick={handleDownload}>
-          PNG保存
-        </PrimaryButton>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+          <PrimaryButton onClick={handleDownload} className="sm:flex-1">
+            📥 PNG保存
+          </PrimaryButton>
 
-        <PrimaryButton onClick={handlePrint}>
-          印刷
-        </PrimaryButton>
-      </div>
+          <PrimaryButton onClick={handlePrint} className="sm:flex-1">
+            🖨️ 印刷
+          </PrimaryButton>
+        </div>
 
-      <div>
-        <SecondaryButton onClick={() => navigate(`/qr-scan`)}>
-          QRスキャンに戻る
-        </SecondaryButton>
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+          <SecondaryButton onClick={() => navigate(`/qr-scan`)} className="sm:flex-1">
+            QRスキャンに戻る
+          </SecondaryButton>
 
-        <SecondaryButton onClick={() => navigate(`/pc-detail/${pcNumber}`)}>
-          PC詳細に戻る
-        </SecondaryButton>
+          <SecondaryButton onClick={() => navigate(`/pc-detail/${pcNumber}`)} className="sm:flex-1">
+            PC詳細に戻る
+          </SecondaryButton>
+        </div>
+
       </div>
     </>
   );
