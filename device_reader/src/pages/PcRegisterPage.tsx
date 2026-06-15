@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { registerPc } from "../services/pcService";
 import type { RegisterPcRequest } from "../types/api/pcRegisterDto";
 import SearchSelect from "../components/SearchSelect";
-import { CURRENT_USER } from "../constants/auth";
+import { useAuth } from "../hooks/useAuth"
 import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 import PageHeader from "../components/common/PageHeader";
@@ -12,6 +12,7 @@ import FormInput from "../components/common/FormInput";
 
 function PcRegisterPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [form, setForm] = useState<RegisterPcRequest>({
     pcNumber: "",
     pcName: "",
@@ -32,7 +33,7 @@ function PcRegisterPage() {
     pcPassword: "",
     pcOfficeLicense: "",
     pcIpAddress: "",
-    updatedBy: CURRENT_USER.email
+    updatedBy: user?.email ?? ""
   });
 
   const [ isSubmitting, setIsSubmitting ] = useState(false);

@@ -21,7 +21,7 @@ return (
 <div className="min-h-screen flex flex-col bg-gray-50">
 
   <header
-    className="bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md"
+    className="bg-linear-to-r from-blue-600 to-blue-700 text-white shadow-md"
   >
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">

@@ -3,12 +3,12 @@ import {
 } from "../constants/roles";
 
 import type {
-  EmployeeInfo
-} from "../types/entity/employee";
+  UserInfo
+} from "../types/entity/auth";
 
 export function isAdmin(
   user:
-    EmployeeInfo | null
+    UserInfo | null
 ){
 
   return (

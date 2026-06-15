@@ -22,19 +22,3 @@ export interface Employee {
     
     employeeEndDate: Date | null;
 }
-
-export type UserRole =
-  | "admin"
-  | "user";
-
-export interface EmployeeInfo {
-
-  email: string;
-
-  employeeName: string;
-
-  role: UserRole;
-
-  enabled: boolean;
-
-}

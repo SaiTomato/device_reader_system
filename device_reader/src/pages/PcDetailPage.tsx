@@ -30,9 +30,18 @@ function PcDetailPage() {
   // 4. 可选：处理错误状态（如果 GAS 返回了错误，可以在这里直接展示给用户）
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg font-medium">
-        読込失敗: {error.message}
-      </div>
+      <>
+        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg font-medium">
+          読込失敗: {error.message}
+        </div>
+        
+        <SecondaryButton
+          onClick={() => { navigate(`/qr-scan`) }}
+          className="sm:flex-1"
+        >
+          QRスキャンに戻る
+        </SecondaryButton>
+      </>
     );
   }
 

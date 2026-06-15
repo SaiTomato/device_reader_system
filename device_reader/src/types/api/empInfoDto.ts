@@ -1,10 +1,10 @@
 import type {
-  EmployeeInfo
-} from "../entity/employee";
+  UserInfo
+} from "../entity/auth";
 
 export interface GetEmployeeRequest {
   email: string;
 }
 
 export interface GetEmployeeResponse
-extends EmployeeInfo {}
+extends UserInfo {}

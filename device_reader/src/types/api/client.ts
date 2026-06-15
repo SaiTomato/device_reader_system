@@ -19,7 +19,7 @@ export async function requestGas<T>(action: string, payload?: any): Promise<T> {
 
   // 2. 统一校验 HTTP 状态码
   if (!response.ok) {
-    throw new Error(`HTTP Error! Status: ${response.status}`);
+    throw new Error(`通信エラーが発生しました。再度お試しください。HTTP Error! Status: ${response.status}`);
   }
 
   // 3. 统一校验 GAS 返回的自定义 ApiResponse 结构

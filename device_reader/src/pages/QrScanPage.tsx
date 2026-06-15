@@ -79,7 +79,7 @@ function QrScanPage() {
 
     <div className="space-y-6 sm:space-y-8">
 
-      <PageHeader title="QRスキャン"/>
+      <PageHeader title="QR読取"/>
 
       <div className="bg-white rounded-lg p-6 sm:p-8 shadow-sm border border-gray-200">
         <p className="text-gray-700 text-base sm:text-lg mb-6 text-center font-medium">

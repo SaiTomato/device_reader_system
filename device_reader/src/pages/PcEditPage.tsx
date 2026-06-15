@@ -4,7 +4,7 @@ import { updatePcInfo, usePcDetail } from '../services/pcService';
 import { usePcListFilterOptions } from '../services/masterService';
 import SearchSelect from '../components/SearchSelect';
 import { useNavigate } from "react-router-dom";
-import { CURRENT_USER } from "../constants/auth";
+import { useAuth } from "../hooks/useAuth"
 import { showError } from '../utils/error';
 import { PrimaryButton, SecondaryButton } from '../components/common/Button';
 import PageHeader from '../components/common/PageHeader';
@@ -15,6 +15,7 @@ import TextareaInput from '../components/common/TextareaInput';
 function PcEditPage() {
     const { pcNumber } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     const { data: pcDetail, isLoading, error } = usePcDetail(pcNumber || "");
 
@@ -61,7 +62,7 @@ function PcEditPage() {
 
             pcRemark: "", // pcDetailに備考がないため、初期値は空文字
 
-            updatedBy: CURRENT_USER.email // 追加: 更新者のメールアドレスを設定
+            updatedBy: user?.email ?? "" // 追加: 更新者のメールアドレスを設定
 
         });
 

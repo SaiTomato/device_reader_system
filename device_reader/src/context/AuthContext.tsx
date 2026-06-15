@@ -1,16 +1,16 @@
 import { createContext, useEffect, useState } from "react";
 
-import type { EmployeeInfo } from "../types/entity/employee";
+import type { UserInfo } from "../types/entity/auth";
 
 export interface AuthContextType {
 
   user:
-    EmployeeInfo | null;
+    UserInfo | null;
 
   setUser:
     React.Dispatch<
       React.SetStateAction<
-        EmployeeInfo | null
+        UserInfo | null
       >
     >;
 
@@ -42,7 +42,7 @@ export function AuthProvider({
     user,
     setUser
   ] = useState<
-    EmployeeInfo | null
+    UserInfo | null
   >(
     () => {
 
