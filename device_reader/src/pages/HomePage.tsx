@@ -56,23 +56,24 @@ function HomePage() {
             📱 QR読取
           </button>
 
-          <button
-            className="bg-linear-to-br from-green-600 to-green-700 text-white py-4 sm:py-6 rounded-lg text-base sm:text-lg font-semibold transition-all duration-200 hover:shadow-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 active:scale-95"
-            onClick={() => { navigate(`/pc-list`) }}
-          >
-            💻 PC一覧
-          </button>
-
           {
             user?.role === "admin"
             &&
             (
-              <button
-                className="bg-linear-to-br from-gray-600 to-gray-700 text-white py-4 sm:py-6 rounded-lg text-base sm:text-lg font-semibold transition-all duration-200 hover:shadow-lg hover:from-gray-700 hover:to-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 active:scale-95"
-                onClick={() => { navigate(`/history`) }}
-              >
-                📋 履歴
-              </button>
+              <>
+                <button
+                  className="bg-linear-to-br from-green-600 to-green-700 text-white py-4 sm:py-6 rounded-lg text-base sm:text-lg font-semibold transition-all duration-200 hover:shadow-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 active:scale-95"
+                  onClick={() => { navigate(`/pc-list`) }}
+                >
+                  💻 PC一覧
+                </button>
+                <button
+                  className="bg-linear-to-br from-gray-600 to-gray-700 text-white py-4 sm:py-6 rounded-lg text-base sm:text-lg font-semibold transition-all duration-200 hover:shadow-lg hover:from-gray-700 hover:to-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 active:scale-95"
+                  onClick={() => { navigate(`/history`) }}
+                >
+                  📋 履歴
+                </button>
+              </>
             )
           }
           

@@ -72,7 +72,31 @@ function PcEditPage() {
 
     }, [pcDetail]);
 
+    const validateRequiredFields = () => {
+        const requiredFields = {
+            pcName: "PC名",
+            employeeCurrent: "現使用者",
+            pcStatus: "PC状況",
+            pcCategory: "PC分類",
+            pcUsage: "PC用途",
+            pcDivision: "PC区分",
+            pcLocation: "PC場所"
+        };
+
+        for (const [field, label] of Object.entries(requiredFields)) {
+            if (!form[field as keyof typeof form]?.toString().trim()) {
+                showError(new Error(`${label}は必須です`));
+                return false;
+            }
+        }
+        return true;
+    };
+
     const handleUpdate = async () => {
+
+        if (!validateRequiredFields()) {
+            return;
+        }
 
         if(form.pcCategory.includes("貸出")){
             navigate(`/loan-document/${pcNumber}`,
@@ -103,7 +127,7 @@ function PcEditPage() {
     const handleBack = () => {
         const hasConfirmed = window.confirm("入力を破棄しますか？");
         if (hasConfirmed) {
-            navigate(-1);
+            navigate(`/pc-detail/${pcNumber}`);
         }
     };
 

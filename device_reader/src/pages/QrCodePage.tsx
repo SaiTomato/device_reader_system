@@ -78,7 +78,7 @@ function QrCodePage() {
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
           <SecondaryButton onClick={() => navigate(`/qr-scan`)} className="sm:flex-1">
-            QRスキャンに戻る
+            QR読取に戻る
           </SecondaryButton>
 
           <SecondaryButton onClick={() => navigate(`/pc-detail/${pcNumber}`)} className="sm:flex-1">

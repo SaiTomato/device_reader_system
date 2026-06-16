@@ -5,11 +5,13 @@ import { usePcDetail } from "../services/pcService";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 import PageHeader from "../components/common/PageHeader";
+import { useAuth } from "../hooks/useAuth";
 
 function PcDetailPage() {
   // 从路由获取 pcNumber
   const { pcNumber } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // 2. 一行代码替代原有的 useState, useEffect 和 fetch 逻辑
   // 解构出 data (自动映射为 PcDetailResponse 类型) 和 isLoading 状态
@@ -39,7 +41,7 @@ function PcDetailPage() {
           onClick={() => { navigate(`/qr-scan`) }}
           className="sm:flex-1"
         >
-          QRスキャンに戻る
+          QR読取に戻る
         </SecondaryButton>
       </>
     );
@@ -88,26 +90,33 @@ function PcDetailPage() {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-wrap">
-        <SecondaryButton
-          onClick={() => { navigate(`/pc-list`) }}
-          className="sm:flex-1"
-        >
-          PC一覧に戻る
-        </SecondaryButton>
+        {
+          user?.role === "admin"
+            &&(
+            <>
+              <SecondaryButton
+                onClick={() => { navigate(`/pc-list`) }}
+                className="sm:flex-1"
+              >
+                PC一覧に戻る
+              </SecondaryButton>
+
+              <PrimaryButton
+                onClick={() => { navigate(`/pc-edit/${pcDetail?.pcNumber}`) }}
+                className="sm:flex-1"
+              >
+                編集
+              </PrimaryButton>
+            </>
+          )
+        }
 
         <SecondaryButton
           onClick={() => { navigate(`/qr-scan`) }}
           className="sm:flex-1"
         >
-          QRスキャンに戻る
+          QR読取に戻る
         </SecondaryButton>
-
-        <PrimaryButton
-          onClick={() => { navigate(`/pc-edit/${pcDetail?.pcNumber}`) }}
-          className="sm:flex-1"
-        >
-          編集
-        </PrimaryButton>
 
         <PrimaryButton
           onClick={() => { navigate(`/qr-code/${pcDetail?.pcNumber}`) }}

@@ -44,7 +44,7 @@ function PcRegisterPage() {
     const values = Object.values(form);
     const hasEmpty =values.some(value => !value.trim());
     if (hasEmpty) {
-      alert("全項目を入力してください");
+      alert("全項目を入力してください。");
       return;
     }
     try {
@@ -65,9 +65,9 @@ function PcRegisterPage() {
   };
 
   const handleBack = () => {
-    const hasConfirmed = window.confirm("入力を破棄しますか？");
+    const hasConfirmed = window.confirm("PC新規登録を中止しますか？");
     if (hasConfirmed) {
-      navigate(-1);
+      navigate(`/pc-list`);
     }
   };
 
