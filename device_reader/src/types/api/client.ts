@@ -9,12 +9,24 @@ const API_URL = import.meta.env.VITE_GAS_API_URL;
  * @param payload 附带的请求参数
  */
 export async function requestGas<T>(action: string, payload?: any): Promise<T> {
+
+  let id_token = "";
+  try {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const userObj = JSON.parse(savedUser);
+      id_token = userObj?.id_token || ""; // 提取出加密令牌
+    }
+  } catch (e) {
+    console.error("Failed to parse user token from localStorage", e);
+  }
+
   // 1. 统一处理 fetch
   const response = await fetch(API_URL, {
     method: "POST",
     redirect: "follow", 
     headers: { "Content-Type": "text/plain" }, 
-    body: JSON.stringify({ action, ...payload }) // 合并 action 和入参
+    body: JSON.stringify({ action, id_token, ...payload }) // 合并 action 和入参
   });
 
   // 2. 统一校验 HTTP 状态码

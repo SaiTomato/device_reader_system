@@ -161,7 +161,7 @@ function PcEditPage() {
                   <p className="text-base sm:text-lg font-bold text-gray-900">{pcDetail?.pcNumber}</p>
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-gray-600 font-medium mb-1">現在状況</p>
+                  <p className="text-xs sm:text-sm text-gray-600 font-medium mb-1">PC現状況</p>
                   <p className="text-base sm:text-lg font-bold text-blue-700">{pcDetail?.pcStatus}</p>
                 </div>
               </div>

@@ -12,4 +12,6 @@ export interface UserInfo {
 
   enabled: boolean;
 
+  id_token: string;
+
 }

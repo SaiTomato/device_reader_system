@@ -3,7 +3,7 @@ import type {
 } from "../entity/auth";
 
 export interface GetEmployeeRequest {
-  email: string;
+  id_token: string;
 }
 
 export interface GetEmployeeResponse

@@ -4,18 +4,18 @@ import { useAuth } from "../hooks/useAuth";
 import { getEmployeeByEmail } from "../services/employeeService";
 import { showError } from "../utils/error";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 
-type GoogleJwtPayload = {
+// type GoogleJwtPayload = {
 
-  email: string;
+//   email: string;
 
-  name: string;
+//   name: string;
 
-  picture?: string;
+//   picture?: string;
 
-};
+// };
 
 function LoginPage() {
     const navigate = useNavigate();
@@ -29,8 +29,11 @@ function LoginPage() {
         }
         setLoading(true);
         try {
-            const decoded = jwtDecode<GoogleJwtPayload>(credentialResponse.credential!);
-            const result = await getEmployeeByEmail({email:decoded.email});
+            //const decoded = jwtDecode<GoogleJwtPayload>(credentialResponse.credential!);
+            const result = await getEmployeeByEmail({ 
+                id_token: credentialResponse.credential
+            });
+            console.log("Login response : "+result);
             setUser(result);
             navigate("/home");
         } catch (error) {
