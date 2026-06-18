@@ -13,6 +13,6 @@ export function useHistoryList(
     ],
     queryFn: () =>
       requestGas<HistorySearchResponse>(
-        "getHistoryList", {request}),
+        "getHistoryList", request),
   });
 }

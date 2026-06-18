@@ -103,7 +103,7 @@ function HistoryPage() {
 
   const histories = data?.items ?? [];
 
-  const PAGE_SIZE = 4;
+  const PAGE_SIZE = 10;
 
   const [
     currentPage,
@@ -126,6 +126,15 @@ function HistoryPage() {
       * PAGE_SIZE
 
     ) ?? [];
+  
+  const updateTypeStyles: Record<string, string> = {
+    "CREATE":     "bg-green-100 text-green-700",
+    "UPDATE":     "bg-blue-100 text-blue-700",
+    "LOAN":     "bg-yellow-100 text-yellow-700",
+    "DELETE":     "bg-red-100 text-red-700",
+  };
+
+  const defaultStyle = "bg-gray-100 text-gray-700";
     
   return (
     <>
@@ -298,6 +307,8 @@ function HistoryPage() {
                 history.historyId
               }
               history={history}
+              updateTypeStyles={updateTypeStyles[history.updateType]}
+              defaultStyle={defaultStyle}
               onClick={
                 handleCardClick
               }
@@ -349,7 +360,8 @@ function HistoryPage() {
               history={
                 selectedHistory
               }
-
+              updateTypeStyles={updateTypeStyles[selectedHistory.updateType]}
+              defaultStyle={defaultStyle}
               onClose={() => {
                 setSelectedHistory(
                   null

@@ -5,12 +5,18 @@ type Props = {
 
   history: PcHistory;
 
+  updateTypeStyles: string;
+
+  defaultStyle: string;
+
   onClose: () => void;
 
 };
 
 function HistoryDetailModal({
   history,
+  updateTypeStyles,
+  defaultStyle,
   onClose
 }: Props){
 
@@ -55,7 +61,7 @@ function HistoryDetailModal({
               <p className="text-xs sm:text-sm text-gray-500 font-medium mb-1">
                 更新分類
               </p>
-              <span className="inline-block text-xs sm:text-sm px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
+              <span className={`inline-block text-xs sm:text-sm px-3 py-1 rounded-full font-medium ${updateTypeStyles ?? defaultStyle}`}>
                 {history.updateType}
               </span>
             </div>

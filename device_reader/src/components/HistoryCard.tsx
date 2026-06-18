@@ -4,6 +4,10 @@ type Props = {
 
   history: PcHistory;
 
+  updateTypeStyles: string;
+
+  defaultStyle: string;
+
   onClick: (
     history: PcHistory
   ) => void;
@@ -12,6 +16,8 @@ type Props = {
 
 function HistoryCard({
   history,
+  updateTypeStyles,
+  defaultStyle,
   onClick
 }: Props){
 
@@ -64,7 +70,7 @@ function HistoryCard({
 
         <div className="space-y-1">
           <p className="text-xs sm:text-sm text-gray-500 font-medium">更新分類</p>
-          <span className="inline-block text-xs sm:text-sm px-3 py-1 rounded-full bg-blue-100 text-blue-700 font-medium">
+          <span className={`inline-block text-xs sm:text-sm px-3 py-1 rounded-full font-medium ${updateTypeStyles ?? defaultStyle}`}>
             {history.updateType}
           </span>
         </div>

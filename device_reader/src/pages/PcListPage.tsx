@@ -37,7 +37,7 @@ function PcListPage() {
     error
   } = usePcList(cleanSearchFilters);
 
-  const PAGE_SIZE = 4;
+  const PAGE_SIZE = 10;
 
   const [
     currentPage,
