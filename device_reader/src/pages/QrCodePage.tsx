@@ -6,12 +6,14 @@ import { useReactToPrint } from "react-to-print";
 import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 import PageHeader from "../components/common/PageHeader";
+import { usePcDetail } from "../services/pcService";
 
 function QrCodePage() {
 
   const { pcNumber } = useParams();
   const navigate = useNavigate();
   const printRef = useRef<HTMLDivElement>(null);
+  const { data: pcDetail, isLoading, error } = usePcDetail(pcNumber || "");
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
@@ -34,11 +36,22 @@ function QrCodePage() {
     }
   };
 
-  if(!pcNumber){
+  if(error){
     return (
       <div className="space-y-4">
-        <p className="text-red-600 font-medium">PC番号がありません。</p>
+        <p className="text-red-600 font-medium">PC番号は存在しません。</p>
         <SecondaryButton onClick={() => navigate(`/qr-scan`)}>戻る</SecondaryButton>
+      </div>
+    );
+  }
+
+  if(isLoading){
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+          <p className="mt-3 text-gray-600 font-medium">データ確認中...</p>
+        </div>
       </div>
     );
   }
@@ -53,7 +66,7 @@ function QrCodePage() {
           className="bg-white rounded-lg p-8 sm:p-10 shadow-lg border border-gray-200 flex flex-col items-center"
         >
           <QRCodeSVG
-            value={pcNumber}
+            value={pcDetail?.pcNumber ?? ""}
             size={256}
           />
           <div

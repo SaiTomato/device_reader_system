@@ -60,7 +60,7 @@ function PcEditPage() {
 
             pcLocation: pcDetail.pcLocation,
 
-            pcRemark: "", // pcDetailに備考がないため、初期値は空文字
+            pcRemark: pcDetail.pcRemark,
 
             updatedBy: user?.email ?? "" // 追加: 更新者のメールアドレスを設定
 
