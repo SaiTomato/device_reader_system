@@ -24,7 +24,16 @@ function QrCodePage() {
 
     try{
       const dataUrl =
-      await toPng(printRef.current, {backgroundColor: "#ffffff"});
+      await toPng(printRef.current, {
+        backgroundColor: "#ffffff",
+        filter: (node: HTMLElement) => {
+          // googleを含むlink/tagを無視する
+          if (node.tagName === 'LINK' && (node as HTMLLinkElement).href?.includes('google')) {
+            return false;
+          }
+          return true;
+        }
+      });
 
       const link = document.createElement("a");
       link.download = `${pcNumber}.png`;
