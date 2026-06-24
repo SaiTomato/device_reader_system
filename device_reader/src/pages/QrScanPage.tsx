@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { showError } from "../utils/error";
@@ -9,7 +9,11 @@ function QrScanPage() {
 
   const navigate = useNavigate();
 
+  // clear()した後の重複スキャン防止
+  const hasHandledScanRef = useRef(false);
+
   useEffect(() => {
+    hasHandledScanRef.current = false;
 
     const container = document.getElementById("qr-reader");
 
@@ -17,53 +21,61 @@ function QrScanPage() {
       container.innerHTML = "";
     }
 
-    const scanner =
-      new Html5QrcodeScanner(
+    let scanner: Html5QrcodeScanner;
 
-        "qr-reader",
+    try {
+      scanner = new Html5QrcodeScanner(
 
-        {
-          fps: 10,
+          "qr-reader",
 
-          qrbox: {
-            width: 250,
-            height: 250
+          {
+            fps: 10,
+
+            qrbox: {
+              width: 250,
+              height: 250
+            },
+
+            rememberLastUsedCamera: true
           },
 
-          rememberLastUsedCamera: true
-        },
+          false
 
-        false
-
-      );
-
-    scanner.render(
-
-      async (
-        decodedText
-      ) => {
-
-        try {
-
-          await scanner.clear();
-
-        } catch(err) {
-
-          showError(err);
-
-        }
-
-        navigate(
-          `/pc-detail/${decodedText}`
         );
 
-      },
+      scanner.render(
 
-      () => {
-        // ignore scan errors
-      }
+        async (
+          decodedText : string
+        ) => {
+          if (hasHandledScanRef.current) return;
+          hasHandledScanRef.current = true;
 
-    );
+          try {
+
+            await scanner.clear();
+
+          } catch(err) {
+
+            console.warn("Failed to stop QR scanner cleanly:", err);
+
+          }
+
+          navigate(
+            `/pc-detail/${decodedText}`
+          );
+
+        },
+
+        () => {
+          // ignore scan errors
+        }
+
+      );
+    } catch (error) {
+      showError(error);
+      return;
+    }
 
     return () => {
 

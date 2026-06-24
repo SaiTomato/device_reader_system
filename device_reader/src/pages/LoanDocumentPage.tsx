@@ -5,11 +5,13 @@ import { useReactToPrint } from "react-to-print";
 import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 import PageHeader from "../components/common/PageHeader";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 function LoanDocumentPage() {
 
   const { pcNumber } = useParams();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,6 +29,7 @@ function LoanDocumentPage() {
           updateData
         );
       if(result.updated){
+        queryClient.invalidateQueries({queryKey: ['pcDetail', pcNumber]});
         navigate(
           "/update-complete"
         );

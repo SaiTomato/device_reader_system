@@ -10,10 +10,12 @@ import { PrimaryButton, SecondaryButton } from '../components/common/Button';
 import PageHeader from '../components/common/PageHeader';
 import FormInput from '../components/common/FormInput';
 import TextareaInput from '../components/common/TextareaInput';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 function PcEditPage() {
     const { pcNumber } = useParams();
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { user } = useAuth();
 
@@ -114,6 +116,7 @@ function PcEditPage() {
             const result = await updatePcInfo(form);
 
             if(result.updated){
+                queryClient.invalidateQueries({queryKey: ['pcDetail', pcNumber]});
                 navigate("/update-complete");
             }
             

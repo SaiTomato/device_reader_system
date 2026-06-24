@@ -10,10 +10,12 @@ export function usePcDetail(pcNumber: string) {
     queryKey: ['pcDetail', pcNumber],
     queryFn: () => requestGas<PcDetailResponse>('getPcDetail', { pcNumber }),
     enabled: !!pcNumber, // pcNumberが存在する場合のみネットワークリクエストを発行
+
+    staleTime: Infinity, // PC詳細のキャッシュ永久化、更新の時該当㍶Numberのキャッシュを破棄処理必要
   });
 }
 
-export function usePcList(filters: PcListFilters) {
+export function usePcList(filters: PcListFilters) { // TODO query必要か検討
   return useQuery<PcListResponse>({
     // ⭕ 关键：把 filters 丢进缓存 Key，这样 React Query 才能监听到过滤条件的变化
     queryKey: ["pcList", filters], 
