@@ -57,7 +57,7 @@ function HomePage() {
           </button>
 
           {
-            user?.role === "admin"
+            user?.role === "admin" && user?.enabled === true
             &&
             (
               <>

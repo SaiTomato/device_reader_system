@@ -33,7 +33,6 @@ function LoginPage() {
             const result = await getEmployeeByEmail({ 
                 id_token: credentialResponse.credential
             });
-            console.log("Login response : "+result);
             setUser(result);
             navigate("/home");
         } catch (error) {
@@ -70,7 +69,6 @@ function LoginPage() {
                             <GoogleLogin
                                 onSuccess={handleLogin}
                                 onError={() => {
-                                    console.log("Login Failed");
                                     showError(new Error("Googleログイン失敗しました"));
                                 }}
                             />

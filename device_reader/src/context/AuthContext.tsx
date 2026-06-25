@@ -46,14 +46,20 @@ export function AuthProvider({
   >(
     () => {
 
-      const saved =
-        localStorage.getItem(
-          "user"
-        );
+      try {
+        const saved =
+          localStorage.getItem(
+            "user"
+          );
 
-      return saved
-        ? JSON.parse(saved)
-        : null;
+        return saved
+          ? JSON.parse(saved)
+          : null;
+      } catch (error) {
+        console.warn("Failed to parse saved user, clearing it.", error);
+        localStorage.removeItem("user"); // 顺手清掉损坏的数据，避免下次还报错
+        return null;
+      }
 
     }
   );

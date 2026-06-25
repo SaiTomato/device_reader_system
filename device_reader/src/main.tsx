@@ -1,4 +1,4 @@
-// import { StrictMode } from 'react'
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
 });
 
 createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
+  <StrictMode>
     <QueryClientProvider client={queryClient}>
       <GoogleOAuthProvider
         clientId={
@@ -30,5 +30,5 @@ createRoot(document.getElementById('root')!).render(
         </AuthProvider>
       </GoogleOAuthProvider>
     </QueryClientProvider>
-  // </StrictMode>,
+  </StrictMode>,
 )

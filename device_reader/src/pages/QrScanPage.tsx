@@ -12,77 +12,97 @@ function QrScanPage() {
   // clear()した後の重複スキャン防止
   const hasHandledScanRef = useRef(false);
 
+  // StrictModeによる二重カメラ防止
+  const cleanupLockRef = useRef<Promise<void>>(Promise.resolve());
+  
   useEffect(() => {
     hasHandledScanRef.current = false;
+    let isActive = true;
+    let scanner: Html5QrcodeScanner | null = null;
 
-    const container = document.getElementById("qr-reader");
+    const acquiredStreams: MediaStream[] = [];
+    const originalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(
+      navigator.mediaDevices
+    );
+    navigator.mediaDevices.getUserMedia = async (
+      constraints?: MediaStreamConstraints
+    ) => {
+      const stream = await originalGetUserMedia(constraints);
+      if (!isActive) {
+        // カメラのstreamを獲得する時、コンポネントもう破棄した場合、カメラ閉じる
+        // ゴーストストリーム防ぐ
+        stream.getTracks().forEach((track) => track.stop());
+      } else {
+        acquiredStreams.push(stream);
+      }
+      return stream;
+    };
 
-    if(container){
-      container.innerHTML = "";
-    }
+    const start = async () => {
+      //　前回のカメラcleanupを待つ
+      await cleanupLockRef.current;
+      if (!isActive) return;// 待つ期間コンポネント破棄されたら、カメラの再起動は不要
 
-    let scanner: Html5QrcodeScanner;
+      const container = document.getElementById("qr-reader");
+      if (container) {
+        container.innerHTML = "";
+      }
 
-    try {
-      scanner = new Html5QrcodeScanner(
-
-          "qr-reader",
-
-          {
-            fps: 10,
-
-            qrbox: {
-              width: 250,
-              height: 250
+      try {
+        scanner = new Html5QrcodeScanner(
+            "qr-reader",
+            {
+              fps: 10,
+              qrbox: {
+                width: 250,
+                height: 250
+              },
+              rememberLastUsedCamera: true
             },
-
-            rememberLastUsedCamera: true
-          },
-
-          false
-
-        );
-
-      scanner.render(
-
-        async (
-          decodedText : string
-        ) => {
-          if (hasHandledScanRef.current) return;
-          hasHandledScanRef.current = true;
-
-          try {
-
-            await scanner.clear();
-
-          } catch(err) {
-
-            console.warn("Failed to stop QR scanner cleanly:", err);
-
-          }
-
-          navigate(
-            `/pc-detail/${decodedText}`
+            false
           );
 
-        },
+        scanner.render(
+          async (decodedText : string) => {
+            if (hasHandledScanRef.current) return;
+            hasHandledScanRef.current = true;
 
-        () => {
-          // ignore scan errors
-        }
+            try {
+              await scanner?.clear();
+            } catch(err) {
+              console.warn("Failed to stop QR scanner cleanly:", err);
+            } finally {
+              // clearに関係せず、カメラを強制終了させる
+              acquiredStreams.forEach((stream) =>
+                stream.getTracks().forEach((track) => track.stop())
+              );
+            }
+            navigate(`/pc-detail/${decodedText}`);
+          },
+          () => {
+            // ignore scan errors
+          }
+        );
+      } catch (error) {
+        showError(error);
+      }
+    };
 
-      );
-    } catch (error) {
-      showError(error);
-      return;
-    }
+    void start();
 
     return () => {
-
-      scanner
-        .clear()
-        .catch(() => {});
-
+      isActive = false;
+      // 他のページを影響しないため、globalのgetUserMediaを元に戻す
+      navigator.mediaDevices.getUserMedia = originalGetUserMedia;
+      // 今回のcleanupをlock, 次のstart()はこれが完成した後実行する
+      cleanupLockRef.current = (scanner?.clear() ?? Promise.resolve())
+        .catch(() => {})
+        .finally(()=>{
+          //　html5-qrcodeと関係せず、全stream強制的に閉じる
+          acquiredStreams.forEach((stream) =>
+            stream.getTracks().forEach((track) => track.stop())
+          );
+        });
     };
 
   }, [navigate]);

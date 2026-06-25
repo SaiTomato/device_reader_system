@@ -91,7 +91,7 @@ function PcDetailPage() {
 
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-wrap">
         {
-          user?.role === "admin"
+          user?.role === "admin" && user?.enabled === true
             &&(
             <>
               <SecondaryButton

@@ -12,7 +12,7 @@ export function AdminRoute({
   children
 }: RouteProps){
 
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   if(
     !user
@@ -40,6 +40,21 @@ export function AdminRoute({
       />
     );
 
+  }
+
+  if(
+    user.enabled !== true
+  ){
+    alert("社員アカウントは無効です、再ログインしてください。");
+
+    setUser(null);
+
+    return (
+      <Navigate
+        to="/"
+        replace
+      />
+    );
   }
 
   return <>{children}</>;
