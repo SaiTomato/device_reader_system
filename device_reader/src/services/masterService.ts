@@ -6,7 +6,7 @@ export function usePcListFilterOptions(){
   return useQuery<PcFilterOptionsResponse>({
     queryKey: ['pcFilterOptions'], 
 
-    queryFn: () => requestGas<PcFilterOptionsResponse>('getDropdownData',{}),
+    queryFn: () => requestGas('getDropdownData',{}),
     
     // 頻繫にリクエストしないため、Dropdownのキャッシュを永久化にする
     staleTime: Infinity,

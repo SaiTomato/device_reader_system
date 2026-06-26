@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from "react";
 
 import type { UserInfo } from "../types/entity/auth";
 
+import { storage } from '../utils/identity';
+
 export interface AuthContextType {
 
   user:
@@ -45,40 +47,16 @@ export function AuthProvider({
     UserInfo | null
   >(
     () => {
-
-      try {
-        const saved =
-          localStorage.getItem(
-            "user"
-          );
-
-        return saved
-          ? JSON.parse(saved)
-          : null;
-      } catch (error) {
-        console.warn("Failed to parse saved user, clearing it.", error);
-        localStorage.removeItem("user"); // 顺手清掉损坏的数据，避免下次还报错
-        return null;
-      }
-
+      return storage.getItem('user'); 
     }
   );
 
   useEffect(() => {
 
     if(user){
-
-      localStorage.setItem(
-        "user",
-        JSON.stringify(user)
-      );
-
+      storage.setItem("user", user);
     }else{
-
-      localStorage.removeItem(
-        "user"
-      );
-
+      storage.removeItem("user");
     }
 
   }, [user]);

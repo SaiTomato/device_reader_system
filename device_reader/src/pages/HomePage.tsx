@@ -21,14 +21,7 @@ function HomePage() {
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
 
           <div>
-
             <PageHeader title="ホーム"/>
-
-            <p
-              id="homeUserName"
-              className="text-sm text-gray-600"
-            ></p>
-
           </div>
 
           <button

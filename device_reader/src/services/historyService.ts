@@ -12,7 +12,6 @@ export function useHistoryList(
       request
     ],
     queryFn: () =>
-      requestGas<HistorySearchResponse>(
-        "getHistoryList", request),
+      requestGas("getHistoryList", request),
   });
 }

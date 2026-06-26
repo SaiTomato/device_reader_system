@@ -8,7 +8,7 @@ import type { RegisterPcRequest, RegisterPcResponse } from '../types/api/pcRegis
 export function usePcDetail(pcNumber: string) {
   return useQuery<PcDetailResponse>({
     queryKey: ['pcDetail', pcNumber],
-    queryFn: () => requestGas<PcDetailResponse>('getPcDetail', { pcNumber }),
+    queryFn: () => requestGas('getPcDetail', { pcNumber }),
     enabled: !!pcNumber, // pcNumberが存在する場合のみネットワークリクエストを発行
 
     staleTime: Infinity, // PC詳細のキャッシュ永久化、更新の時該当㍶Numberのキャッシュを破棄処理必要
@@ -21,7 +21,7 @@ export function usePcList(filters: PcListFilters) { // TODO query必要か検討
     queryKey: ["pcList", filters], 
     
     // ⭕ 关键：把 filters 作为参数，打包丢给统一的 requestGas 函数
-    queryFn: () => requestGas<PcListResponse>("getPcList", filters),
+    queryFn: () => requestGas("getPcList", filters),
   });
 }
 
@@ -29,7 +29,7 @@ export async function updatePcInfo(
   updateData: UpdatePcRequest
 ): Promise<UpdatePcResponse> {
 
-  return requestGas<UpdatePcResponse>(
+  return requestGas(
     "updatePcInfo",
     updateData
   );
@@ -40,7 +40,7 @@ export async function registerPc(
   request: RegisterPcRequest
 ): Promise<RegisterPcResponse> {
 
-  return requestGas<RegisterPcResponse>(
+  return requestGas(
     "registerPc",
     request
   );

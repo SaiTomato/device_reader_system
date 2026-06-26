@@ -1,10 +1,10 @@
 import { requestGas } from "../types/api/client";
-import type { GetEmployeeRequest, GetEmployeeResponse } from "../types/api/empInfoDto";
+import type { GetEmployeeRequest } from "../types/api/empInfoDto";
 
 export function getEmployeeByEmail(
     request: GetEmployeeRequest
 ){
-    return requestGas<GetEmployeeResponse>(
+    return requestGas(
         "getEmployeeByEmail",
         request
     );
