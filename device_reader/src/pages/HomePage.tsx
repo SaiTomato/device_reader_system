@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PageHeader from "../components/common/PageHeader";
 import { useAuth } from "../hooks/useAuth";
+import { isAdmin } from "../utils/permission";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ function HomePage() {
           </button>
 
           {
-            user?.role === "admin" && user?.enabled === true
+            isAdmin(user)
             &&
             (
               <>

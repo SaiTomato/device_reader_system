@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 import PageHeader from "../components/common/PageHeader";
 import { useAuth } from "../hooks/useAuth";
+import { isAdmin } from "../utils/permission";
 
 function PcDetailPage() {
   // 从路由获取 pcNumber
@@ -91,8 +92,8 @@ function PcDetailPage() {
 
       <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-wrap">
         {
-          user?.role === "admin" && user?.enabled === true
-            &&(
+          isAdmin(user)
+          &&(
             <>
               <SecondaryButton
                 onClick={() => { navigate(`/pc-list`) }}

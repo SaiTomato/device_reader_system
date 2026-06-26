@@ -10,11 +10,13 @@ export function isAdmin(
   user:
     UserInfo | null
 ){
-
   return (
     user?.role
     ===
     ROLE.ADMIN
+    && 
+    user?.enabled 
+    === 
+    true
   );
-
 }

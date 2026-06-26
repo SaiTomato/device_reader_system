@@ -44,7 +44,7 @@ function PcRegisterPage() {
     const values = Object.values(form);
     const hasEmpty =values.some(value => !value.trim());
     if (hasEmpty) {
-      alert("全項目を入力してください。");
+      showError("全項目を入力してください。");
       return;
     }
     try {
