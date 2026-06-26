@@ -1,229 +1,214 @@
-# React + TypeScript + Vite
+# Device Reader（设备读卡系统 / デバイスリーダー）
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PC 设备管理前端。通过 Google 登录，连接 Google Apps Script（GAS）后端，支持 QR 扫码、设备登记与借出记录等功能。
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## English
 
-## React Compiler
+### Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Web frontend for managing company PCs. Users sign in with Google; admins can register PCs, edit records, and view history. All users can scan QR codes to open PC details.
 
-## Expanding the ESLint configuration
+### Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Feature                   | Admin | User |
+| ------------------------- | ----- | ---- |
+| Google login              | ✓     | ✓    |
+| QR scan → PC detail       | ✓     | ✓    |
+| PC list / register / edit | ✓     | —    |
+| Loan document (print)     | ✓     | —    |
+| Operation history         | ✓     | —    |
+| QR code display           | ✓     | ✓    |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Tech stack
+
+React 19 · TypeScript · Vite · Tailwind CSS · React Query · React Router · Google OAuth
+
+Backend API: Google Apps Script (`VITE_GAS_API_URL`)
+
+### Quick start
+
+**Requirements:** Node.js 18+
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Copy env file and fill in values
+cp .env.example .env
+
+# 3. Start dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Variable                | Description                |
+| ----------------------- | -------------------------- |
+| `VITE_GAS_API_URL`      | GAS Web App deployment URL |
+| `VITE_GOOGLE_CLIENT_ID` | Google OAuth Client ID     |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+
+**Other commands**
+
+```bash
+npm run dev:host   # Dev server (LAN accessible)
+npm run build      # Production build → dist/
+npm run preview    # Preview production build
+npm run lint       # ESLint
+```
+
+### Project structure
+
+```
+src/
+├── pages/       # Route pages (login, PC list, QR scan, etc.)
+├── components/  # Reusable UI components
+├── services/    # API calls (pc, history, employee, master)
+├── routes/      # Router & auth guards
+├── context/     # Auth state
+└── types/       # TypeScript types & DTOs
 ```
 
 ---
 
-## 日本語版 (Japanese)
+## 中文
 
-# React + TypeScript + Vite
+### 项目简介
 
-このテンプレートは、HMRと一部のESLintルールを備えたViteでReactを動作させるための最小限のセットアップを提供します。
+公司 PC 设备管理 Web 前端。使用 Google 账号登录，后端对接 Google Apps Script（GAS）。普通用户可扫码查看设备；管理员可登记、编辑设备并查看操作历史。
 
-現在、2つの公式プラグインが利用可能です：
+### 功能一览
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) は [Oxc](https://oxc.rs) を使用します
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) は [SWC](https://swc.rs/) を使用します
 
-## React Compiler
+| 功能              | 管理员 | 普通用户 |
+| --------------- | --- | ---- |
+| Google 登录       | ✓   | ✓    |
+| QR 扫码 → 设备详情    | ✓   | ✓    |
+| PC 列表 / 登记 / 编辑 | ✓   | —    |
+| 借出单据（打印）        | ✓   | —    |
+| 操作历史            | ✓   | —    |
+| QR 码展示          | ✓   | ✓    |
 
-このテンプレートでは、React Compilerの開発およびビルドパフォーマンスへの影響により、デフォルトでは有効になっていません。追加するには、[このドキュメント](https://react.dev/learn/react-compiler/installation)を参照してください。
 
-## ESLint設定の拡張
+### 技术栈
 
-本番アプリケーションを開発している場合は、型認識を備えたリントルールを有効にするために設定を更新することをお勧めします：
+React 19 · TypeScript · Vite · Tailwind CSS · React Query · React Router · Google OAuth
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // その他の設定...
+后端 API：Google Apps Script（通过 `VITE_GAS_API_URL` 配置）
 
-      // tseslint.configs.recommendedを削除してこちらに置き換えます
-      tseslint.configs.recommendedTypeChecked,
-      // または、これを使用してより厳しいルールを使用します
-      tseslint.configs.strictTypeChecked,
-      // オプションで、これをスタイルルールに追加します
-      tseslint.configs.stylisticTypeChecked,
+### 快速开始
 
-      // その他の設定...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // その他のオプション...
-    },
-  },
-])
+**环境要求：** Node.js 18+
+
+```bash
+# 1. 安装依赖
+npm install
+
+# 2. 复制环境变量并填写
+cp .env.example .env
+
+# 3. 启动开发服务器
+npm run dev
 ```
 
-また、React固有のリントルールのために、[eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x)と[eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom)をインストールできます：
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| 变量                      | 说明                  |
+| ----------------------- | ------------------- |
+| `VITE_GAS_API_URL`      | GAS Web App 部署地址    |
+| `VITE_GOOGLE_CLIENT_ID` | Google OAuth 客户端 ID |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // その他の設定...
-      // Reactのリントルールを有効にします
-      reactX.configs['recommended-typescript'],
-      // React DOMのリントルールを有効にします
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // その他のオプション...
-    },
-  },
-])
+
+**其他命令**
+
+```bash
+npm run dev:host   # 开发服务器（局域网可访问）
+npm run build      # 生产构建，输出至 dist/
+npm run preview    # 预览生产构建
+npm run lint       # 代码检查
+```
+
+### 目录结构
+
+```
+src/
+├── pages/       # 页面（登录、PC 列表、扫码等）
+├── components/  # 可复用 UI 组件
+├── services/    # API 调用（pc、history、employee、master）
+├── routes/      # 路由与权限守卫
+├── context/     # 登录状态
+└── types/       # TypeScript 类型与 DTO
 ```
 
 ---
 
-## 中文版 (Chinese)
+## 日本語
 
-# React + TypeScript + Vite
+### 概要
 
-本模板提供了一个最小化的设置，可以让 React 在 Vite 中工作，并具有 HMR 和一些 ESLint 规则。
+社内 PC 管理用 Web フロントエンド。Google アカウントでログインし、Google Apps Script（GAS）をバックエンド API として利用します。一般ユーザーは QR 読取で PC 詳細を確認でき、管理者は PC の登録・編集・履歴確認ができます。
 
-目前有两个官方插件可用：
+### 機能一覧
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) 使用 [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) 使用 [SWC](https://swc.rs/)
 
-## React 编译器
+| 機能              | 管理者 | 一般  |
+| --------------- | --- | --- |
+| Google ログイン     | ✓   | ✓   |
+| QR 読取 → PC 詳細   | ✓   | ✓   |
+| PC 一覧 / 登録 / 編集 | ✓   | —   |
+| 貸出書類（印刷）        | ✓   | —   |
+| 操作履歴            | ✓   | —   |
+| QR コード表示        | ✓   | ✓   |
 
-由于 React 编译器对开发和构建性能的影响，此模板中默认未启用。要添加它，请参阅 [此文档](https://react.dev/learn/react-compiler/installation)。
 
-## 扩展 ESLint 配置
+### 技術スタック
 
-如果你正在开发生产应用程序，我们建议更新配置以启用类型感知的 lint 规则：
+React 19 · TypeScript · Vite · Tailwind CSS · React Query · React Router · Google OAuth
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // 其他配置...
+バックエンド API：Google Apps Script（`VITE_GAS_API_URL` で設定）
 
-      // 移除 tseslint.configs.recommended，改用此项
-      tseslint.configs.recommendedTypeChecked,
-      // 或者使用这个以获得更严格的规则
-      tseslint.configs.strictTypeChecked,
-      // 可选地添加这个以获得样式规则
-      tseslint.configs.stylisticTypeChecked,
+### セットアップ
 
-      // 其他配置...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // 其他选项...
-    },
-  },
-])
+**必要環境：** Node.js 18 以上
+
+```bash
+# 1. 依存関係をインストール
+npm install
+
+# 2. 環境変数ファイルをコピーして値を設定
+cp .env.example .env
+
+# 3. 開発サーバーを起動
+npm run dev
 ```
 
-你还可以安装 [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) 和 [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) 以获取 React 特定的 lint 规则：
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| 変数                      | 説明                     |
+| ----------------------- | ---------------------- |
+| `VITE_GAS_API_URL`      | GAS Web App のデプロイ URL  |
+| `VITE_GOOGLE_CLIENT_ID` | Google OAuth クライアント ID |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // 其他配置...
-      // 启用 React 的 lint 规则
-      reactX.configs['recommended-typescript'],
-      // 启用 React DOM 的 lint 规则
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // 其他选项...
-    },
-  },
-])
+
+**その他のコマンド**
+
+```bash
+npm run dev:host   # 開発サーバー（LAN からアクセス可）
+npm run build      # 本番ビルド → dist/
+npm run preview    # 本番ビルドのプレビュー
+npm run lint       # ESLint
 ```
+
+### ディレクトリ構成
+
+```
+src/
+├── pages/       # ページ（ログイン、PC 一覧、QR 読取など）
+├── components/  # 共通 UI コンポーネント
+├── services/    # API 呼び出し（pc、history、employee、master）
+├── routes/      # ルーティングと認可ガード
+├── context/     # 認証状態
+└── types/       # TypeScript 型定義・DTO
+```
+
