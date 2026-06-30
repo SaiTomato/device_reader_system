@@ -16,6 +16,8 @@ type SearchSelectProps = {
 
   isDisabled?: boolean;
 
+  required?: boolean;
+
 };
 
 function SearchSelect({
@@ -28,7 +30,9 @@ function SearchSelect({
 
   placeholder,
 
-  onChange
+  onChange,
+
+  required = false
 
 }: SearchSelectProps) {
   return (
@@ -40,6 +44,7 @@ function SearchSelect({
           className="font-medium text-gray-700 text-sm"
         >
           {label}
+          {required && <span className="text-red-500 ml-1">*</span>}
         </label>
       )}
 

@@ -177,6 +177,7 @@ function PcEditPage() {
                 <FormInput
                     label="PC名"
                     type="text"
+                    format="cjkAlphaNum"
                     value={form.pcName}
                     onChange={(e) => setForm({...form, pcName: e.target.value})}
                 />

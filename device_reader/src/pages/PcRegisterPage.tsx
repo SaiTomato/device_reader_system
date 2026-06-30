@@ -9,6 +9,12 @@ import { showError } from "../utils/error";
 import { PrimaryButton, SecondaryButton } from "../components/common/Button";
 import PageHeader from "../components/common/PageHeader";
 import FormInput from "../components/common/FormInput";
+import { validateIpAddress } from "../utils/validators";
+
+const fieldValidators: Partial<Record<keyof RegisterPcRequest, (v: string) => string | undefined>> = {
+  pcIpAddress: validateIpAddress,
+  // 今後validateがあるinputもここに追加する
+};
 
 function PcRegisterPage() {
   const navigate = useNavigate();
@@ -29,7 +35,7 @@ function PcRegisterPage() {
     pcBuyDate: "",
     pcOs: "",
     pcOsLicense: "",
-    // pcBackupDate: "",
+    pcBackupDate: "",
     pcPassword: "",
     pcOfficeLicense: "",
     pcIpAddress: "",
@@ -40,13 +46,37 @@ function PcRegisterPage() {
 
   const { data: options } = usePcListFilterOptions();
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const REQUIRED_FIELDS: (keyof RegisterPcRequest)[] = [
+    "pcNumber", "pcName", "pcStatus", "pcCategory", "pcUsage", "pcDivision"
+  ];
+
   const handleRegister = async () => {
-    const values = Object.values(form);
-    const hasEmpty =values.some(value => !value.trim());
+    const hasEmpty = REQUIRED_FIELDS.some(
+      (key) => !form[key] || String(form[key]).trim() === ""
+    );
     if (hasEmpty) {
-      showError("全項目を入力してください。");
+      showError(new Error("必須項目を入力してください。"));
       return;
     }
+
+    // submit前に一回、格式をチェック
+    const newErrors: Record<string, string> = {};
+    for (const key of Object.keys(fieldValidators) as (keyof RegisterPcRequest)[]) {
+      const validator = fieldValidators[key];
+      const message = validator?.(form[key] as string);
+      if (message) newErrors[key] = message;
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      showError(new Error("入力内容に誤りがあります。"));
+      return;
+    }
+
+    setErrors({});
+
     try {
 
       setIsSubmitting(true);
@@ -81,14 +111,18 @@ function PcRegisterPage() {
           
           <FormInput
             label="PC番号"
+            required
             type="text"
+            format="halfWidthNumber"
             value={form.pcNumber}
             onChange={(e) => setForm({...form, pcNumber: e.target.value})}
           />
 
           <FormInput
             label="PC名"
+            required
             type="text"
+            format="cjkAlphaNum"
             value={form.pcName}
             onChange={(e) => setForm({...form, pcName: e.target.value})}
           />
@@ -110,6 +144,7 @@ function PcRegisterPage() {
 
           <SearchSelect
             label="PC状況"
+            required
             value={form.pcStatus}
             options={
               options?.pcStatus || []
@@ -125,6 +160,7 @@ function PcRegisterPage() {
 
           <SearchSelect
             label="PC分類"
+            required
             value={form.pcCategory}
             options={
               options?.pcCategory || []
@@ -140,6 +176,7 @@ function PcRegisterPage() {
 
           <SearchSelect
             label="PC用途"
+            required
             value={form.pcUsage}
             options={
               options?.pcUsage || []
@@ -155,6 +192,7 @@ function PcRegisterPage() {
 
           <SearchSelect
             label="PC区分"
+            required
             value={form.pcDivision}
             options={
               options?.pcDivision || []
@@ -186,6 +224,7 @@ function PcRegisterPage() {
           <FormInput
             label="PCメーカー"
             type="text"
+            format="cjkAlphaNum"
             value={form.pcMaker}
             onChange={(e) => setForm({...form, pcMaker: e.target.value})}
           />
@@ -227,9 +266,17 @@ function PcRegisterPage() {
 
           <FormInput
             label="PC OSライセンス"
-            type="text" 
+            type="text"
+            format="halfWidthAlphaNumSymbol"
             value={form.pcOsLicense}
             onChange={(e) => setForm({...form, pcOsLicense: e.target.value})}
+          />
+
+          <FormInput
+            label="バックアップイメージ作成日"
+            type="date" 
+            value={form.pcBuyDate}
+            onChange={(e) => setForm({...form, pcBuyDate: e.target.value})}
           />
 
           <FormInput
@@ -241,7 +288,8 @@ function PcRegisterPage() {
 
           <FormInput
             label="PC Officeライセンス"
-            type="text" 
+            type="text"
+            format="halfWidthAlphaNumSymbol"
             value={form.pcOfficeLicense}
             onChange={(e) => setForm({...form, pcOfficeLicense: e.target.value})}
           />
@@ -251,6 +299,8 @@ function PcRegisterPage() {
             type="text" 
             value={form.pcIpAddress}
             onChange={(e) => setForm({...form, pcIpAddress: e.target.value})}
+            validate={validateIpAddress}
+            error={errors.pcIpAddress}
           />
         </div>
 

@@ -30,7 +30,7 @@ export interface RegisterPcRequest {
 
   pcOsLicense: string;
 
-//   pcBackupDate: string;
+  pcBackupDate: string;
 
   pcPassword: string;
 

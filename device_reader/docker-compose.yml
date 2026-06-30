@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  frontend:
+    container_name: lan-react-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # 格式为 宿主机端口:容器内端口
+    restart: always
