@@ -33,7 +33,8 @@ function PcEditPage() {
         pcDivision: "",
         pcLocation: "",
         pcRemark: "",
-        updatedBy: ""
+        updatedBy: "",
+        previousPcName: ""
     });
 
     const [ originalPcName, setOriginalPcName ] = useState("");
@@ -64,8 +65,9 @@ function PcEditPage() {
 
             pcRemark: pcDetail.pcRemark,
 
-            updatedBy: user?.email ?? "" // 追加: 更新者のメールアドレスを設定
+            updatedBy: user?.email ?? "", // 追加: 更新者のメールアドレスを設定
 
+            previousPcName: originalPcName
         });
 
         setOriginalPcName(
@@ -87,7 +89,7 @@ function PcEditPage() {
 
         for (const [field, label] of Object.entries(requiredFields)) {
             if (!form[field as keyof typeof form]?.toString().trim()) {
-                showError(new Error(`${label}は必須です`));
+                showError(new Error(`${label}は必須項目です。`));
                 return false;
             }
         }
@@ -99,27 +101,26 @@ function PcEditPage() {
         if (!validateRequiredFields()) {
             return;
         }
-
-        if(form.pcCategory.includes("貸出")){
-            navigate(`/loan-document/${pcNumber}`,
-                {
-                    state: {
-                        updateData: form,
-                        originalPcName
-                    }
-                }
-            );
-            return;
-        }
+        
         try {
             setIsSubmitting(true);
             const result = await updatePcInfo(form);
 
-            if(result.updated){
+            if (result.pdfData) {
+                const link = document.createElement("a");
+                link.href = result.pdfData;
+                link.download = `貸出証_${form.employeeCurrent}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
                 queryClient.invalidateQueries({queryKey: ['pcDetail', pcNumber]});
-                navigate("/update-complete");
+                navigate(`/update-complete/${pcNumber}`);
             }
-            
+            else {
+                queryClient.invalidateQueries({queryKey: ['pcDetail', pcNumber]});
+                navigate(`/update-complete/${pcNumber}`);
+            }
         } catch (error) {
             showError(error)
         }finally{

@@ -15,7 +15,7 @@ interface ActionMap {
   getPcDetail: { payload: { pcNumber: string }; data: PcDetailResponse };
   getDropdownData: { payload: {}; data: PcFilterOptionsResponse };
   getPcList: { payload: PcListFilters; data: PcListResponse };
-  updatePcInfo: { payload: UpdatePcRequest; data: UpdatePcResponse };
+  checkUpdatePcInfo: { payload: UpdatePcRequest; data: UpdatePcResponse };
   registerPc: { payload: RegisterPcRequest; data: RegisterPcResponse };
 }
 

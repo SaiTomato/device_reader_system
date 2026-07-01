@@ -13,7 +13,6 @@ import PcListPage from "../pages/PcListPage";
 import PcDetailPage from "../pages/PcDetailPage";
 import PcEditPage from "../pages/PcEditPage";
 import UpdateCompletePage from "../pages/UpdateCompletePage";
-import LoanDocumentPage from "../pages/LoanDocumentPage";
 import QrScanPage from "../pages/QrScanPage";
 import QrCodePage from "../pages/QrCodePage";
 import HistoryPage from "../pages/HistoryPage";
@@ -79,21 +78,11 @@ function AppRouter() {
         />
 
         <Route
-          path="/update-complete"
+          path="/update-complete/:pcNumber"
           element={
           <AdminRoute>
             <MainLayout>
               <UpdateCompletePage />
-            </MainLayout>
-          </AdminRoute>}
-        />
-
-        <Route
-          path="/loan-document/:pcNumber"
-          element={
-          <AdminRoute>
-            <MainLayout>
-              <LoanDocumentPage />
             </MainLayout>
           </AdminRoute>}
         />

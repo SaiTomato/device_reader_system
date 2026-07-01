@@ -24,6 +24,6 @@ export interface UpdatePcRequest {
 
 export interface UpdatePcResponse {
 
-  updated: boolean;
+  pdfData: string;
 
 }

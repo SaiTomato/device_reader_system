@@ -1,7 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PageHeader from "../components/common/PageHeader";
 
 function UpdateCompletePage() {
+  const { pcNumber } = useParams();
   const navigate = useNavigate();
   
   return (
@@ -30,10 +31,10 @@ function UpdateCompletePage() {
 
         <div className="flex justify-center">
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => navigate(`/pc-detail/${pcNumber}`)}
             className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold transition-all duration-200 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md hover:shadow-lg"
           >
-            ホームに戻る
+            戻る
           </button>
         </div>
 

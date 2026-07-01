@@ -275,8 +275,8 @@ function PcRegisterPage() {
           <FormInput
             label="バックアップイメージ作成日"
             type="date" 
-            value={form.pcBuyDate}
-            onChange={(e) => setForm({...form, pcBuyDate: e.target.value})}
+            value={form.pcBackupDate}
+            onChange={(e) => setForm({...form, pcBackupDate: e.target.value})}
           />
 
           <FormInput

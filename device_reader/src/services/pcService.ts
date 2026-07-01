@@ -30,7 +30,7 @@ export async function updatePcInfo(
 ): Promise<UpdatePcResponse> {
 
   return requestGas(
-    "updatePcInfo",
+    "checkUpdatePcInfo",
     updateData
   );
 
